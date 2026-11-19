@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CosmicPods: Planet Sort Puzzle</title>
+<meta name="description" content="A ball sort puzzle in space. Sort planets, beat 100 bosses and clear 1000 levels.">
+<link rel="canonical" href="https://cosmicpods.biberbit.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CosmicPods: Planet Sort Puzzle">
+<meta property="og:description" content="A ball sort puzzle in space. Sort planets, beat 100 bosses and clear 1000 levels.">
+<meta property="og:url" content="https://cosmicpods.biberbit.com/">
+<meta property="og:image" content="https://cosmicpods.biberbit.com/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#130b30">
+<link rel="icon" type="image/png" href="img/icon-192.png">
+<link rel="apple-touch-icon" href="img/icon-192.png">
+<style>
+:root{
+  --bg:#130b30;--bg2:#4a1fc4;--accent:#ffc233;--glow:rgba(226,59,208,.42);--on-accent:#1d1140;
+  --text:#f5f2ff;--muted:#c3bbe8;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.14);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--accent)}
+a:focus-visible,.rail:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+.hero{position:relative;overflow:hidden;background:radial-gradient(900px 620px at 80% 42%,var(--glow),transparent 62%),linear-gradient(160deg,var(--bg2),var(--bg) 72%)}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.75;background-image:radial-gradient(1px 1px at 88.3% 44.4%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(2px 2px at 93.6% 40.1%,rgba(255,255,255,0.5),transparent 70%),radial-gradient(1px 1px at 67.0% 19.5%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(2px 2px at 4.5% 55.2%,rgba(255,255,255,0.7),transparent 70%),radial-gradient(1px 1px at 77.1% 39.5%,rgba(255,255,255,0.7),transparent 70%),radial-gradient(2px 2px at 36.7% 88.6%,rgba(255,255,255,0.7),transparent 70%),radial-gradient(1.5px 1.5px at 15.2% 52.2%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(1.5px 1.5px at 58.1% 46.7%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(2px 2px at 65.4% 28.6%,rgba(255,255,255,0.5),transparent 70%),radial-gradient(1.5px 1.5px at 81.0% 43.2%,rgba(255,255,255,0.7),transparent 70%),radial-gradient(2px 2px at 76.7% 42.6%,rgba(255,255,255,0.5),transparent 70%),radial-gradient(2px 2px at 48.4% 63.1%,rgba(255,255,255,0.5),transparent 70%),radial-gradient(2px 2px at 10.6% 32.8%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(1px 1px at 47.6% 67.2%,rgba(255,255,255,0.7),transparent 70%),radial-gradient(2px 2px at 98.8% 12.9%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(2px 2px at 8.3% 72.3%,rgba(255,255,255,0.7),transparent 70%),radial-gradient(1.5px 1.5px at 63.2% 6.4%,rgba(255,255,255,0.7),transparent 70%),radial-gradient(2px 2px at 74.3% 86.9%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(1.5px 1.5px at 94.2% 56.8%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(1.5px 1.5px at 10.2% 84.3%,rgba(255,255,255,0.5),transparent 70%),radial-gradient(1px 1px at 98.6% 26.5%,rgba(255,255,255,0.5),transparent 70%),radial-gradient(1px 1px at 24.0% 75.2%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(1px 1px at 37.2% 79.3%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(1.5px 1.5px at 95.4% 70.9%,rgba(255,255,255,0.7),transparent 70%),radial-gradient(1px 1px at 26.9% 35.4%,rgba(255,255,255,0.5),transparent 70%),radial-gradient(1.5px 1.5px at 9.4% 46.9%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(1.5px 1.5px at 4.6% 65.6%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(1.5px 1.5px at 73.7% 45.9%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(1.5px 1.5px at 7.1% 2.9%,rgba(255,255,255,0.7),transparent 70%),radial-gradient(2px 2px at 94.4% 21.2%,rgba(255,255,255,0.5),transparent 70%),radial-gradient(1px 1px at 96.1% 75.6%,rgba(255,255,255,0.7),transparent 70%),radial-gradient(1.5px 1.5px at 67.9% 52.7%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(1px 1px at 12.7% 26.0%,rgba(255,255,255,0.7),transparent 70%),radial-gradient(1.5px 1.5px at 61.4% 9.4%,rgba(255,255,255,0.7),transparent 70%),radial-gradient(1px 1px at 37.8% 42.3%,rgba(255,255,255,0.7),transparent 70%),radial-gradient(1.5px 1.5px at 9.2% 74.6%,rgba(255,255,255,0.5),transparent 70%),radial-gradient(2px 2px at 89.8% 49.2%,rgba(255,255,255,0.7),transparent 70%),radial-gradient(1.5px 1.5px at 84.9% 27.4%,rgba(255,255,255,0.5),transparent 70%),radial-gradient(2px 2px at 11.1% 14.4%,rgba(255,255,255,0.5),transparent 70%),radial-gradient(1px 1px at 45.5% 16.2%,rgba(255,255,255,0.5),transparent 70%),radial-gradient(1.5px 1.5px at 21.0% 27.6%,rgba(255,255,255,0.5),transparent 70%),radial-gradient(1px 1px at 11.7% 78.5%,rgba(255,255,255,0.5),transparent 70%),radial-gradient(1px 1px at 9.3% 60.8%,rgba(255,255,255,0.7),transparent 70%),radial-gradient(1px 1px at 77.4% 11.4%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(1px 1px at 18.1% 95.8%,rgba(255,255,255,0.9),transparent 70%),radial-gradient(1.5px 1.5px at 17.8% 58.0%,rgba(255,255,255,0.7),transparent 70%)}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1fr;gap:48px;padding-top:56px;padding-bottom:72px;align-items:center}
+.icon{width:88px;height:88px;border-radius:22%;box-shadow:0 12px 40px rgba(0,0,0,.45)}
+h1{font-size:clamp(2.7rem,8vw,4.6rem);line-height:1;font-weight:900;letter-spacing:-.025em;margin:22px 0 0}
+h1 span{display:block;font-size:.4em;color:var(--accent);letter-spacing:.01em;margin-top:12px;font-weight:800}
+.tagline{font-size:clamp(1.05rem,2.3vw,1.3rem);color:var(--muted);max-width:36ch;margin:20px 0 30px}
+.btn{display:inline-flex;align-items:center;gap:12px;padding:16px 28px;border-radius:16px;font-weight:800;font-size:1.08rem;text-decoration:none;background:var(--accent);color:var(--on-accent);box-shadow:0 6px 0 rgba(0,0,0,.28),0 20px 44px -14px var(--accent);transition:transform .15s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn svg{width:22px;height:22px;flex:none}
+.btn.soon{background:rgba(255,255,255,.08);color:var(--text);border:1.5px solid var(--line);box-shadow:none;cursor:default}
+.btn.soon:hover{transform:none}
+.note{font-size:.92rem;color:var(--muted);margin:14px 0 0}
+.stats{display:flex;gap:32px;margin:40px 0 0;padding:0;list-style:none;flex-wrap:wrap}
+.stats b{display:block;font-size:2rem;font-weight:900;color:var(--accent);line-height:1.05}
+.stats span{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.09em}
+.shots{position:relative;justify-self:center;width:min(280px,66vw);aspect-ratio:9/16}
+.shots img{position:absolute;inset:0;width:100%;height:100%;border-radius:26px;box-shadow:0 40px 80px -24px rgba(0,0,0,.75),0 0 0 1px var(--line)}
+.shots img:first-child{transform:translate(24%,5%) rotate(9deg) scale(.92);opacity:.9}
+.shots img:last-child{transform:translate(-10%,0) rotate(-4deg)}
+@media(min-width:880px){
+  .hero .wrap{grid-template-columns:1.1fr .9fr;padding-top:96px;padding-bottom:110px}
+  .shots{width:300px}
+}
+
+section{padding:76px 0}
+h2{font-size:clamp(1.7rem,4.2vw,2.4rem);font-weight:900;margin:0 0 8px;letter-spacing:-.015em}
+.sub{color:var(--muted);margin:0 0 34px;max-width:62ch;font-size:1.05rem}
+.rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 20px 26px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.rail img{flex:0 0 auto;width:min(60vw,240px);aspect-ratio:9/16;border-radius:20px;scroll-snap-align:center;box-shadow:0 20px 40px -18px rgba(0,0,0,.7),0 0 0 1px var(--line)}
+@media(min-width:1160px){.rail{padding-left:calc((100vw - 1120px)/2 + 20px);padding-right:calc((100vw - 1120px)/2 + 20px)}}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px}
+.card::before{content:"";display:block;width:36px;height:5px;border-radius:3px;background:var(--accent);margin-bottom:18px}
+.card h3{margin:0 0 8px;font-size:1.18rem;font-weight:800}
+.card p{margin:0;color:var(--muted)}
+.band{text-align:center;background:radial-gradient(700px 300px at 50% 0,var(--glow),transparent 70%);border-top:1px solid var(--line)}
+.band .sub{margin-left:auto;margin-right:auto}
+footer{padding:36px 0 44px;border-top:1px solid var(--line);font-size:.93rem;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;justify-content:space-between}
+footer a{color:var(--text)}
+.studio{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:700}
+.studio img{width:36px;height:36px}
+footer nav{display:flex;flex-wrap:wrap;gap:8px 24px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <img class="icon" src="img/icon-192.png" width="88" height="88" alt="CosmicPods app icon">
+      <h1>CosmicPods<span>Planet Sort Puzzle</span></h1>
+      <p class="tagline">A ball sort puzzle in space. Sort planets, beat 100 bosses and clear 1000 levels.</p>
+      <span class="btn soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3v18l15-9z"/></svg>Coming soon to Google Play</span><p class="note">Now in closed testing on Android.</p>
+      <ul class="stats"><li><b>1000</b><span>levels</span></li><li><b>100</b><span>bosses</span></li><li><b>50</b><span>mind-benders</span></li></ul>
+    </div>
+    <div class="shots" aria-hidden="true"><img src="img/s2.webp" width="600" height="1067" alt=""><img src="img/s1.webp" width="600" height="1067" alt=""></div>
+  </div>
+</header>
+
+<main>
+<section aria-labelledby="h-look">
+  <div class="wrap">
+    <h2 id="h-look">It starts calm. Then the galaxy fights back.</h2>
+    <p class="sub">Tap a pod, tap another, and move the planets until every pod holds just one kind. Easy to learn, and it keeps finding new ways to surprise you.</p>
+  </div>
+  <div class="rail" tabindex="0" role="group" aria-label="Screenshots"><img src="img/s1.webp" width="600" height="1067" loading="lazy" alt="Sorting planets into glass pods on level 16"><img src="img/s2.webp" width="600" height="1067" loading="lazy" alt="A boss fight against the Frost Leviathan"><img src="img/s3.webp" width="600" height="1067" loading="lazy" alt="The galaxy map with 1000 levels"><img src="img/s4.webp" width="600" height="1067" loading="lazy" alt="The Cosmic IQ brain scan"><img src="img/s5.webp" width="600" height="1067" loading="lazy" alt="A memory level in The Void"><img src="img/s6.webp" width="600" height="1067" loading="lazy" alt="Hourglass pods in The Void"><img src="img/s7.webp" width="600" height="1067" loading="lazy" alt="The Cosmic Daily puzzle"><img src="img/s8.webp" width="600" height="1067" loading="lazy" alt="A weekly event level"></div>
+</section>
+
+<section aria-labelledby="h-feat" style="padding-top:20px">
+  <div class="wrap">
+    <h2 id="h-feat">What&#x27;s inside</h2>
+    <p class="sub">More than a sort game: bosses, daily puzzles and a whole wing of brain training.</p>
+    <div class="grid"><div class="card"><h3>Fight space bosses</h3><p>Every 10 levels a boss arrives. Each of the 100 bosses has its own look and attacks: freezing pods, swapping them, hiding planets in fog, even flipping the whole board.</p></div><div class="card"><h3>1000 levels across the galaxy</h3><p>New planets, comets, ships and aliens keep joining the sort, with twists like frozen pods, hidden planets and supernova timers. The scenery changes every 10 levels.</p></div><div class="card"><h3>Power-ups that save the day</h3><p>Undo a move, ask for a hint, add an extra pod, swallow a whole planet kind with a Black Hole, or use Time Warp to jump back to where you can still win.</p></div><div class="card"><h3>Something new every day</h3><p>Weekly events, daily rewards and quests, the Cosmic Wheel, a Galaxy Pass with 30 reward tiers, a Planet Album and 20 pod skins.</p></div><div class="card"><h3>Train your brain in The Void</h3><p>50 mind-benders with rules no sort game has. Memorize a board before it goes dark, solve riddles in an exact number of moves, and flip hourglass pods.</p></div><div class="card"><h3>Easy to see</h3><p>Accessibility mode adds a shape symbol to every planet, so colour is never the only clue.</p></div></div>
+  </div>
+</section>
+
+<section class="band" aria-labelledby="h-get">
+  <div class="wrap">
+    <h2 id="h-get">Take on your first boss</h2>
+    <p class="sub">Free to play on Android phones and tablets.</p>
+    <span class="btn soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3v18l15-9z"/></svg>Coming soon to Google Play</span><p class="note">Now in closed testing on Android.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="studio" href="https://biberbit.com/"><img src="img/studio.png" width="36" height="36" alt="">BiberBit Studio</a>
+    <nav aria-label="Footer">
+      <a href="https://biberbit.com/cosmo-sort-privacy.html">Privacy policy</a>
+      <a href="mailto:support@biberbit.com">support@biberbit.com</a>
+      <span>&copy; 2026 BiberBit Studio</span>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
