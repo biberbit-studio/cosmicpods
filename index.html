@@ -219,6 +219,9 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
 .lite .shine::after,.lite .cta::after{display:none}
 .lite .nebula,.lite #sky,.lite #sky2{display:none}
 .lite body{background:var(--stars,none) repeat,radial-gradient(900px 700px at 85% 140px,color-mix(in srgb,var(--pink) 34%,transparent),transparent 70%) no-repeat,radial-gradient(1000px 800px at 8% 460px,color-mix(in srgb,var(--violet) 46%,transparent),transparent 70%) no-repeat,var(--bg);background-size:var(--starsz,auto),auto,auto,auto}
+.lite .glow,.lite .halo,.lite .orbit,.lite .spin{display:none}
+.lite .boss{background:var(--card)}
+.lite .belt{background:rgba(123,60,255,.12)}
 .lite .rv{opacity:1;transform:none;transition:none}
 .lite .dimg,.lite .hero-art img,.lite h2 em,.lite .points svg,.lite .media.two .p2{filter:none}
 .lite .phone{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22)}
@@ -513,7 +516,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
 
   /* ---- the planet belt slides by itself and can be dragged with a finger or the mouse ---- */
   var beltSec = document.querySelector(".belt"), track = document.querySelector(".track");
-  var bx = 0, half = 0, dragging = false, lastX = 0;
+  var bx = 0, half = 0, dragging = false, lastX = 0, beltSkip = false;
   function measure(){ if (track) half = track.scrollWidth / 2; }
   if (track){
     measure(); addEventListener("resize", measure); addEventListener("load", measure);
@@ -524,6 +527,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
   function belt(dt){
     if (!half || !beltSec.classList.contains("live")) return;
     if (!dragging && !calm) bx -= dt * .045;
+    if (lite && !dragging && (beltSkip = !beltSkip)) return;     /* calm mode: move it on every other frame */
     if (bx <= -half) bx += half; else if (bx > 0) bx -= half;
     track.style.transform = "translate3d(" + bx.toFixed(2) + "px,0,0)";
   }
