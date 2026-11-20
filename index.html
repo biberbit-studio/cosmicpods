@@ -72,7 +72,18 @@ ul{list-style:none;margin:0;padding:0}
 .lg.l2{width:74%;margin-top:-3%;animation-delay:.18s}
 .lg img{width:100%}
 .shine{position:absolute;inset:0;overflow:hidden;-webkit-mask:var(--mk) center/100% 100% no-repeat;mask:var(--mk) center/100% 100% no-repeat}
-.shine::after,.cta::after{z-index:-1;opacity:.6;animation-duration:3.6s;animation-delay:0s}
+.shine::after,.cta::after{content:"";position:absolute;top:0;bottom:0;left:0;width:36%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.85) 50%,transparent);transform:translateX(-130%) skewX(-18deg);animation:sweep 5s ease-in-out 1.2s infinite}
+.l2 .shine::after{animation-delay:1.6s}
+@keyframes sweep{0%{transform:translateX(-130%) skewX(-18deg)}45%,100%{transform:translateX(420%) skewX(-18deg)}}
+@keyframes pop{from{opacity:0;transform:scale(.55) translateY(20px)}}
+.tagline{font-size:clamp(1.1rem,2.4vw,1.4rem);color:var(--muted);max-width:32ch;margin:22px 0 28px;font-weight:500}
+.cta{position:relative;display:inline-flex;align-items:center;gap:12px;padding:15px 28px;border-radius:999px;font-weight:700;font-size:1.12rem;text-decoration:none;overflow:hidden;isolation:isolate;min-height:56px}
+.cta svg{width:26px;height:26px;flex:none}
+.cta.go{color:#1d1140;background:linear-gradient(180deg,#ffe68a,var(--gold) 55%,#f29a1f);box-shadow:0 6px 0 #a35a06,0 0 46px -6px var(--gold);transition:transform .15s,box-shadow .15s}
+.cta.go:hover{transform:translateY(-3px)}
+.cta.go:active{transform:translateY(3px);box-shadow:0 3px 0 #a35a06,0 0 30px -6px var(--gold)}
+.cta.soon{color:var(--text);border:2px solid transparent;background:linear-gradient(#1a1042,#1a1042) padding-box,linear-gradient(110deg,var(--gold),var(--pink),var(--cyan),var(--violet),var(--gold)) border-box;box-shadow:0 0 40px -10px var(--pink)}
+.cta::after{z-index:-1;opacity:.6;animation-duration:3.6s;animation-delay:0s}
 .note{font-size:.95rem;color:var(--muted);margin:14px 0 0}
 .stats{display:flex;gap:10px;margin-top:34px}
 .stats li{flex:0 1 auto;min-width:0;padding:12px 14px;border-radius:18px;background:var(--card);border:1px solid var(--line)}
@@ -126,6 +137,16 @@ h3{font-family:var(--display);font-weight:400;letter-spacing:.01em}
 .points li{display:flex;gap:10px;align-items:flex-start;font-weight:500}
 .points svg{width:20px;height:20px;flex:none;margin-top:4px;color:var(--g);filter:drop-shadow(0 0 6px var(--g))}
 
+.tease{display:flex;gap:16px;align-items:center;margin-top:28px;padding:16px 18px;border-radius:22px;border:1.5px dashed color-mix(in srgb,var(--g) 65%,transparent);background:color-mix(in srgb,var(--g) 9%,transparent)}
+.tease-art{display:flex;flex:none;border-radius:18px;background:radial-gradient(closest-side,color-mix(in srgb,var(--g) 70%,transparent),transparent)}
+.tease-art .spr{filter:brightness(0)}
+.tease-art .spr+.spr{margin-left:-22px}
+.tease-art .spr::before{animation-play-state:paused}
+.tease:hover .spr::before{animation-play-state:running}
+.tease-tag{margin:0 0 4px;font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g)}
+.tease h3{margin:0 0 4px;font-size:1.35rem;line-height:1.1}
+.tease p:last-child{margin:0;color:var(--muted);font-size:.98rem}
+@media(max-width:480px){.tease{flex-direction:column;align-items:flex-start}}
 .show>.wrap{display:grid;gap:34px;align-items:center}
 .media{position:relative;justify-self:center;width:min(78vw,300px);padding:10px 0}
 .media .glow{position:absolute;inset:-8% -30%;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--g) 48%,transparent),transparent);animation:breathe 7s ease-in-out infinite}
@@ -221,7 +242,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
   <div class="copy">
     <h1 class="logo"><span class="vh">CosmicPods: Planet Sort Puzzle</span><span class="lg l1"><img src="img/title_cosmic-900.webp" width="900" height="217" alt=""><i class="shine" style="--mk:url(img/title_cosmic-900.webp)"></i></span><span class="lg l2"><img src="img/title_pods-900.webp" width="900" height="311" alt=""><i class="shine" style="--mk:url(img/title_pods-900.webp)"></i></span></h1>
     <p class="tagline">A ball sort puzzle in space. Sort planets, beat 100 bosses and clear 1000 levels.</p>
-    <span class="cta soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3v18l15-9z"/></svg><span>Coming soon to Google Play</span></span><p class="note">Now in closed testing on Android.</p>
+    <span class="cta soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>Coming soon to Google Play</span></span><p class="note">Now in closed testing on Android.</p>
     <ul class="stats"><li><b data-count="1000">1000</b><span>levels</span></li><li><b data-count="100">100</b><span>bosses</span></li><li><b data-count="50">50</b><span>mind-benders</span></li></ul>
   </div>
   <div class="stage" aria-hidden="true">
@@ -243,6 +264,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
     <h2>Every 10 levels, a <em>boss</em> arrives</h2>
     <p class="lead">Each of the 100 bosses has its own look and its own attacks. They freeze pods, swap them around, scorch them, hide planets in fog and even flip the whole board.</p>
     <ul class="points"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>100 bosses, no two alike</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>Bosses rage when their health runs low</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>Beat one and win a gift of power-ups</span></li></ul>
+    
   </div>
 </div></section>
 <section class="show flip" id="journey" style="--g:#ff7a2f"><div class="wrap">
@@ -252,6 +274,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
     <h2><em>1000 levels</em> across the galaxy</h2>
     <p class="lead">New planets, comets, ships and aliens keep joining the sort. The scenery changes every 10 levels with a new cosmic phenomenon.</p>
     <ul class="points"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>Twists like frozen pods, hidden planets and supernova timers</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>Chests, landmarks and galaxy gates along the path</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>Hard levels that pay double coins</span></li></ul>
+    <div class="tease"><div class="tease-art" aria-hidden="true"><i class="spr " style="--s:88px;--m:72px;--n:20;--d:1.9s" data-bg="img/spr-cannoneer_cannon-240.webp"></i><i class="spr " style="--s:88px;--m:72px;--n:20;--d:1.9s" data-bg="img/spr-glacier_frost-240.webp"></i></div><div><p class="tease-tag">In the works</p><h3>A second universe</h3><p>1000 more levels are on the way, with brand-new bosses that each have to be beaten in their own way.</p></div></div>
   </div>
 </div></section>
 <section class="show" id="void" style="--g:#b06bff"><div class="wrap">
@@ -261,6 +284,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
     <h2>Dare to enter <em>The Void</em></h2>
     <p class="lead">50 mind-benders with rules no sort game has. Memorize a board before it goes dark, solve riddles in the exact number of moves, flip hourglass pods and tame the quantum joker planet.</p>
     <ul class="points"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>Cosmic IQ: a brain scan of your planning, speed, memory and focus</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>Ghost Race: beat your own best run</span></li></ul>
+    
   </div>
 </div></section>
 <section class="show flip" id="daily" style="--g:#3fe07a"><div class="wrap">
@@ -270,6 +294,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
     <h2>Something <em>new</em> every day</h2>
     <p class="lead">One Cosmic Daily puzzle, the same for the whole world. Weekly events with special twists like Mega Sort and Warp Storm.</p>
     <ul class="points"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>Daily rewards, quests and the Cosmic Wheel</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>A Galaxy Pass with 30 reward tiers</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>A Planet Album and 20 pod skins to collect</span></li></ul>
+    
   </div>
 </div></section>
 
@@ -347,7 +372,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
 
 <section class="band" id="get"><img class="spin" src="img/spiral_galaxy-900.webp" width="887" height="703" alt="" loading="lazy">
   <div class="wrap rv"><i class="tw" style="left:61.2%;top:11.1%;--z:10px;--dl:1.15s;--c:#ffe9a8"></i><i class="tw" style="left:42.3%;top:30.1%;--z:8px;--dl:0.10s;--c:#ffc1ee"></i><i class="tw" style="left:89.0%;top:49.3%;--z:12px;--dl:0.04s;--c:#bfe9ff"></i><i class="tw" style="left:89.7%;top:17.8%;--z:8px;--dl:0.52s;--c:#fff"></i><i class="tw" style="left:12.4%;top:27.0%;--z:16px;--dl:1.32s;--c:#ffe9a8"></i><i class="tw" style="left:62.9%;top:90.6%;--z:8px;--dl:0.44s;--c:#ffc1ee"></i><i class="tw" style="left:11.3%;top:11.8%;--z:20px;--dl:2.02s;--c:#fff"></i><i class="tw" style="left:11.4%;top:78.9%;--z:10px;--dl:2.06s;--c:#bfe9ff"></i>
-    <h2>Take on your <em>first boss</em></h2><p class="lead">Free to play on Android phones and tablets.</p><span class="cta soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3v18l15-9z"/></svg><span>Coming soon to Google Play</span></span><p class="note">Now in closed testing on Android.</p>
+    <h2>Take on your <em>first boss</em></h2><p class="lead">Free to play on Android phones and tablets.</p><span class="cta soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>Coming soon to Google Play</span></span><p class="note">Now in closed testing on Android.</p>
   </div>
 </section>
 </main>
