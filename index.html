@@ -48,8 +48,10 @@ ul{list-style:none;margin:0;padding:0}
 
 /* sprites: one-row strips stepped with CSS */
 .spr{display:block;position:relative;overflow:hidden;--z:var(--s);width:var(--z);height:var(--z);background-repeat:no-repeat;background-size:0 0}
-.spr::before{content:"";position:absolute;left:0;top:0;height:100%;width:calc(var(--z)*var(--n));background-image:inherit;background-repeat:no-repeat;background-size:100% 100%;animation:spr var(--d) steps(var(--n)) infinite}
+.spr::before,.spr::after{content:"";position:absolute;left:0;top:0;height:100%;width:calc(var(--z)*var(--n));background-image:inherit;background-repeat:no-repeat;background-size:100% 100%;animation:spr var(--d) steps(var(--n)) infinite}
+.spr::after{animation-name:spr,melt;animation-duration:var(--d),calc(var(--d)/var(--n));animation-timing-function:steps(var(--n)),linear;animation-delay:calc(var(--d)/var(--n)*-1),0s;animation-iteration-count:infinite}
 @keyframes spr{to{transform:translateX(calc(var(--z)*var(--n)*-1))}}
+@keyframes melt{from{opacity:0}to{opacity:1}}
 .dimg{--z:var(--s);width:var(--z);height:auto;max-width:none;filter:drop-shadow(0 12px 28px rgba(0,0,0,.5))}
 @media(max-width:759px){.spr,.dimg{--z:var(--m)}}
 .fl{position:absolute;display:block;translate:calc(var(--px,0)*var(--k,12)*1px) calc(var(--py,0)*var(--k,12)*1px);transition:translate .5s cubic-bezier(.2,.7,.2,1);animation:bob var(--bob,7s) ease-in-out infinite}
@@ -145,8 +147,8 @@ h3{font-family:var(--display);font-weight:400;letter-spacing:.01em}
 .tease-art{display:flex;flex:none;border-radius:18px;background:radial-gradient(closest-side,color-mix(in srgb,var(--g) 70%,transparent),transparent)}
 .tease-art .spr{filter:brightness(0)}
 .tease-art .spr+.spr{margin-left:-22px}
-.tease-art .spr::before{animation-play-state:paused}
-.tease:hover .spr::before{animation-play-state:running}
+.tease-art .spr::before,.tease-art .spr::after{animation-play-state:paused}
+.tease:hover .spr::before,.tease:hover .spr::after{animation-play-state:running}
 .tease-tag{margin:0 0 4px;font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g)}
 .tease h3{margin:0 0 4px;font-size:1.35rem;line-height:1.1}
 .tease p:last-child{margin:0;color:var(--muted);font-size:.98rem}
@@ -178,8 +180,8 @@ h3{font-family:var(--display);font-weight:400;letter-spacing:.01em}
 .does{margin:10px 0 4px;font-weight:500;font-size:.98rem}
 .quote{margin:0;color:var(--muted);font-style:italic;font-size:.92rem}
 .mystery .spr{filter:brightness(0)}
-.mystery .spr::before{animation-play-state:paused}
-.mystery:hover .spr::before{animation-play-state:running}
+.mystery .spr::before,.mystery .spr::after{animation-play-state:paused}
+.mystery:hover .spr::before,.mystery:hover .spr::after{animation-play-state:running}
 @media(min-width:900px){.boss-grid{grid-template-columns:repeat(4,1fr);gap:18px}.boss{padding:20px 16px 24px}}
 
 .pu-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
@@ -262,7 +264,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
     <i class="tw" style="left:14.5%;top:85.9%;--z:16px;--dl:2.32s;--c:#fff"></i><i class="tw" style="left:92.7%;top:40.6%;--z:8px;--dl:2.07s;--c:#ffe9a8"></i><i class="tw" style="left:91.2%;top:88.4%;--z:8px;--dl:1.32s;--c:#bfe9ff"></i><i class="tw" style="left:15.2%;top:75.4%;--z:16px;--dl:2.06s;--c:#ffc1ee"></i><i class="tw" style="left:37.0%;top:87.0%;--z:12px;--dl:2.25s;--c:#fff"></i><i class="tw" style="left:52.2%;top:29.3%;--z:20px;--dl:1.77s;--c:#fff"></i><i class="tw" style="left:65.1%;top:29.5%;--z:16px;--dl:1.43s;--c:#ffc1ee"></i><i class="tw" style="left:43.2%;top:56.9%;--z:16px;--dl:1.69s;--c:#fff"></i>
   </div>
 </div></section>
-<section class="belt" aria-label="19 kinds to sort: planets, comets, rockets, aliens and a sun"><div class="track" aria-hidden="true"><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.2s" data-bg="img/spr-p0-112.webp"></i><small>Mars</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.8000000000000003s" data-bg="img/spr-p1-112.webp"></i><small>Jupiter</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:4.4s" data-bg="img/spr-p2-112.webp"></i><small>Saturn</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:5.0s" data-bg="img/spr-p3-112.webp"></i><small>Toxic</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.2s" data-bg="img/spr-p4-112.webp"></i><small>Earth</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.8000000000000003s" data-bg="img/spr-p5-112.webp"></i><small>Uranus</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:4.4s" data-bg="img/spr-p6-112.webp"></i><small>Neptune</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:5.0s" data-bg="img/spr-p7-112.webp"></i><small>Violet</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.2s" data-bg="img/spr-p8-112.webp"></i><small>Pink</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.8000000000000003s" data-bg="img/spr-p9-112.webp"></i><small>Rock</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:4.4s" data-bg="img/spr-p10-112.webp"></i><small>Ice moon</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:5.0s" data-bg="img/spr-p11-112.webp"></i><small>Moon</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.2s" data-bg="img/spr-p0-112.webp"></i><small>Mars</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.8000000000000003s" data-bg="img/spr-p1-112.webp"></i><small>Jupiter</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:4.4s" data-bg="img/spr-p2-112.webp"></i><small>Saturn</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:5.0s" data-bg="img/spr-p3-112.webp"></i><small>Toxic</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.2s" data-bg="img/spr-p4-112.webp"></i><small>Earth</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.8000000000000003s" data-bg="img/spr-p5-112.webp"></i><small>Uranus</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:4.4s" data-bg="img/spr-p6-112.webp"></i><small>Neptune</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:5.0s" data-bg="img/spr-p7-112.webp"></i><small>Violet</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.2s" data-bg="img/spr-p8-112.webp"></i><small>Pink</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.8000000000000003s" data-bg="img/spr-p9-112.webp"></i><small>Rock</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:4.4s" data-bg="img/spr-p10-112.webp"></i><small>Ice moon</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:5.0s" data-bg="img/spr-p11-112.webp"></i><small>Moon</small></span></div><p class="belt-text">19 kinds to sort: planets, comets, rockets, aliens and a sun</p></section>
+<section class="belt" aria-label="19 kinds to sort: planets, comets, rockets, aliens and a sun"><div class="track" aria-hidden="true"><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.2s" data-bg="img/spr-p0-96.webp"></i><small>Mars</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.9s" data-bg="img/spr-p1-96.webp"></i><small>Jupiter</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:5.6s" data-bg="img/spr-p2-96.webp"></i><small>Saturn</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:6.3s" data-bg="img/spr-p3-96.webp"></i><small>Toxic</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.2s" data-bg="img/spr-p4-96.webp"></i><small>Earth</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.9s" data-bg="img/spr-p5-96.webp"></i><small>Uranus</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:5.6s" data-bg="img/spr-p6-96.webp"></i><small>Neptune</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:6.3s" data-bg="img/spr-p7-96.webp"></i><small>Violet</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.2s" data-bg="img/spr-p8-96.webp"></i><small>Pink</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.9s" data-bg="img/spr-p9-96.webp"></i><small>Rock</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:5.6s" data-bg="img/spr-p10-96.webp"></i><small>Ice moon</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:6.3s" data-bg="img/spr-p11-96.webp"></i><small>Moon</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.2s" data-bg="img/spr-p0-96.webp"></i><small>Mars</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.9s" data-bg="img/spr-p1-96.webp"></i><small>Jupiter</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:5.6s" data-bg="img/spr-p2-96.webp"></i><small>Saturn</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:6.3s" data-bg="img/spr-p3-96.webp"></i><small>Toxic</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.2s" data-bg="img/spr-p4-96.webp"></i><small>Earth</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.9s" data-bg="img/spr-p5-96.webp"></i><small>Uranus</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:5.6s" data-bg="img/spr-p6-96.webp"></i><small>Neptune</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:6.3s" data-bg="img/spr-p7-96.webp"></i><small>Violet</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.2s" data-bg="img/spr-p8-96.webp"></i><small>Pink</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.9s" data-bg="img/spr-p9-96.webp"></i><small>Rock</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:5.6s" data-bg="img/spr-p10-96.webp"></i><small>Ice moon</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:6.3s" data-bg="img/spr-p11-96.webp"></i><small>Moon</small></span></div><p class="belt-text">19 kinds to sort: planets, comets, rockets, aliens and a sun</p></section>
 <section class="intro"><div class="wrap rv"><h2>It starts calm. Then the <em>galaxy fights back</em>.</h2><p class="lead">Tap a pod, tap another, and move the planets until every pod holds just one kind. Easy to learn, and it keeps finding new ways to surprise you.</p></div></section>
 
 <section class="show" id="bosses-intro" style="--g:#9fe8ff"><div class="wrap">
@@ -426,30 +428,33 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
       if (s.big && !calm && big.length < 34) big.push(s); else star(bg, s, s.big ? .8 : .3 + Math.random() * .6);
     }
   }
+  var prev = 0;
   function tick(t){
     requestAnimationFrame(tick);
-    if (t - last < 48) return;
-    last = t;
-    for (var i = 0; i < big.length; i++){
-      var s = big[i], l = s.r * 6.5 + 2;
-      fg.clearRect(s.x - l, s.y - l, l * 2, l * 2);
-      star(fg, s, .25 + .75 * (.5 + .5 * Math.sin(t * .001 * s.v + s.p)));
+    var dt = Math.min(t - prev, 50); prev = t;
+    if (t - last >= 33){
+      last = t;
+      for (var i = 0; i < big.length; i++){
+        var s = big[i], l = s.r * 6.5 + 2;
+        fg.clearRect(s.x - l, s.y - l, l * 2, l * 2);
+        star(fg, s, .25 + .75 * (.5 + .5 * Math.sin(t * .001 * s.v + s.p)));
+      }
     }
-    if (box){ fg.clearRect(box[0], box[1], box[2], box[3]); box = null; }
     if (!shot && t > nextShot){
       var dir = Math.random() < .5 ? 1 : -1;
-      shot = {x: W * (.2 + Math.random() * .6), y: H * Math.random() * .35, vx: dir * (11 + Math.random() * 7), vy: 5 + Math.random() * 4, life: 1};
+      shot = {x: W * (.2 + Math.random() * .6), y: H * Math.random() * .35, vx: dir * (.3 + Math.random() * .18), vy: .13 + Math.random() * .1, life: 1};
       nextShot = t + 4000 + Math.random() * 6000;
     }
     if (shot){
-      shot.x += shot.vx; shot.y += shot.vy; shot.life -= .03;
-      var tx = shot.x - shot.vx * 11, ty = shot.y - shot.vy * 11;
+      if (box) fg.clearRect(box[0], box[1], box[2], box[3]);
+      shot.x += shot.vx * dt; shot.y += shot.vy * dt; shot.life -= dt / 1300;
+      if (shot.life <= 0){ shot = null; box = null; return; }
+      var tx = shot.x - shot.vx * 420, ty = shot.y - shot.vy * 420;
       var tail = fg.createLinearGradient(shot.x, shot.y, tx, ty);
-      tail.addColorStop(0, "rgba(255,255,255," + Math.max(shot.life, 0) + ")"); tail.addColorStop(1, "rgba(255,255,255,0)");
+      tail.addColorStop(0, "rgba(255,255,255," + shot.life + ")"); tail.addColorStop(1, "rgba(255,255,255,0)");
       fg.strokeStyle = tail; fg.lineWidth = 2; fg.lineCap = "round";
       fg.beginPath(); fg.moveTo(shot.x, shot.y); fg.lineTo(tx, ty); fg.stroke();
       box = [Math.min(shot.x, tx) - 4, Math.min(shot.y, ty) - 4, Math.abs(shot.x - tx) + 8, Math.abs(shot.y - ty) + 8];
-      if (shot.life <= 0) shot = null;
     }
   }
   size(); addEventListener("resize", size);
@@ -458,7 +463,11 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
   /* lazy sprite strips, scroll reveal, counters, and a "live" mark on the sections in view */
   var io = "IntersectionObserver" in window;
   var sprites = document.querySelectorAll(".spr[data-bg]");
-  function load(el){ el.style.backgroundImage = "url(" + el.dataset.bg + ")"; el.removeAttribute("data-bg"); }
+  function load(el){   /* decode the strip off the main thread first, so showing it never stalls a frame */
+    var u = el.dataset.bg, im = new Image();
+    el.removeAttribute("data-bg"); im.src = u;
+    (im.decode ? im.decode() : Promise.resolve()).catch(function(){}).then(function(){ el.style.backgroundImage = "url(" + u + ")"; });
+  }
   if (io){
     root.classList.add("io");
     var lv = new IntersectionObserver(function(es){ es.forEach(function(e){ e.target.classList.toggle("live", e.isIntersecting); }); }, {rootMargin: "80px"});
