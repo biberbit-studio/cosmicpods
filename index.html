@@ -47,11 +47,7 @@ ul{list-style:none;margin:0;padding:0}
   var(--bg)}
 
 /* sprites: one-row strips stepped with CSS */
-.spr{display:block;position:relative;overflow:hidden;--z:var(--s);width:var(--z);height:var(--z);background-repeat:no-repeat;background-size:0 0}
-.spr::before,.spr::after{content:"";position:absolute;left:0;top:0;height:100%;width:calc(var(--z)*var(--n));background-image:inherit;background-repeat:no-repeat;background-size:100% 100%;animation:spr var(--d) steps(var(--n)) infinite}
-.spr::after{animation-name:spr,melt;animation-duration:var(--d),calc(var(--d)/var(--n));animation-timing-function:steps(var(--n)),linear;animation-delay:calc(var(--d)/var(--n)*-1),0s;animation-iteration-count:infinite}
-@keyframes spr{to{transform:translateX(calc(var(--z)*var(--n)*-1))}}
-@keyframes melt{from{opacity:0}to{opacity:1}}
+.spr{display:block;--z:var(--s);width:var(--z);height:var(--z)}
 .dimg{--z:var(--s);width:var(--z);height:auto;max-width:none;filter:drop-shadow(0 12px 28px rgba(0,0,0,.5))}
 @media(max-width:759px){.spr,.dimg{--z:var(--m)}}
 .fl{position:absolute;display:block;translate:calc(var(--px,0)*var(--k,12)*1px) calc(var(--py,0)*var(--k,12)*1px);transition:translate .5s cubic-bezier(.2,.7,.2,1);animation:bob var(--bob,7s) ease-in-out infinite}
@@ -120,9 +116,8 @@ ul{list-style:none;margin:0;padding:0}
 
 /* planet belt */
 .belt{position:relative;padding:26px 0 18px;border-block:1px solid var(--line);background:linear-gradient(90deg,rgba(123,60,255,.16),rgba(255,79,184,.12),rgba(63,224,255,.12));overflow:hidden}
-.track{display:flex;width:max-content;animation:slide 48s linear infinite}
-.belt:hover .track{animation-play-state:paused}
-@keyframes slide{to{transform:translateX(-50%)}}
+.track{display:flex;width:max-content;cursor:grab;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.track.drag{cursor:grabbing}
 .bi{display:grid;justify-items:center;gap:6px;padding:0 20px}
 .bi small{font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .belt-text{text-align:center;margin:16px 0 0;font-weight:500;color:var(--text);padding:0 22px}
@@ -147,8 +142,6 @@ h3{font-family:var(--display);font-weight:400;letter-spacing:.01em}
 .tease-art{display:flex;flex:none;border-radius:18px;background:radial-gradient(closest-side,color-mix(in srgb,var(--g) 70%,transparent),transparent)}
 .tease-art .spr{filter:brightness(0)}
 .tease-art .spr+.spr{margin-left:-22px}
-.tease-art .spr::before,.tease-art .spr::after{animation-play-state:paused}
-.tease:hover .spr::before,.tease:hover .spr::after{animation-play-state:running}
 .tease-tag{margin:0 0 4px;font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g)}
 .tease h3{margin:0 0 4px;font-size:1.35rem;line-height:1.1}
 .tease p:last-child{margin:0;color:var(--muted);font-size:.98rem}
@@ -180,8 +173,6 @@ h3{font-family:var(--display);font-weight:400;letter-spacing:.01em}
 .does{margin:10px 0 4px;font-weight:500;font-size:.98rem}
 .quote{margin:0;color:var(--muted);font-style:italic;font-size:.92rem}
 .mystery .spr{filter:brightness(0)}
-.mystery .spr::before,.mystery .spr::after{animation-play-state:paused}
-.mystery:hover .spr::before,.mystery:hover .spr::after{animation-play-state:running}
 @media(min-width:900px){.boss-grid{grid-template-columns:repeat(4,1fr);gap:18px}.boss{padding:20px 16px 24px}}
 
 .pu-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
@@ -221,6 +212,18 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
 
 /* sections outside the screen stop animating */
 .io main>section:not(.live) *,.io main>section:not(.live) *::before,.io main>section:not(.live) *::after{animation-play-state:paused!important}
+/* a slow device (no graphics acceleration): the decorations stand still so the page itself stays smooth */
+.lite .fl,.lite .halo,.lite .orbit,.lite .glow,.lite .tw,.lite .shine::after,.lite .cta::after,.lite .spin,.lite .pu img{animation:none!important}
+.lite .fl{transition:none}
+.lite .tw{opacity:.7;transform:rotate(45deg) scale(.8)}
+.lite .shine::after,.lite .cta::after{display:none}
+.lite .nebula,.lite #sky,.lite #sky2{display:none}
+.lite body{background:var(--stars,none) repeat,radial-gradient(900px 700px at 85% 140px,color-mix(in srgb,var(--pink) 34%,transparent),transparent 70%) no-repeat,radial-gradient(1000px 800px at 8% 460px,color-mix(in srgb,var(--violet) 46%,transparent),transparent 70%) no-repeat,var(--bg);background-size:var(--starsz,auto),auto,auto,auto}
+.lite .rv{opacity:1;transform:none;transition:none}
+.lite .dimg,.lite .hero-art img,.lite h2 em,.lite .points svg,.lite .media.two .p2{filter:none}
+.lite .phone{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22)}
+.lite .cta.soon,.lite .cta.go,.lite .pill{box-shadow:none}
+.lite h2{text-shadow:none}
 /* scroll reveal */
 .js .rv{opacity:0;transform:translateY(34px);transition:opacity .8s ease var(--dl,0s),transform .8s cubic-bezier(.2,.8,.2,1) var(--dl,0s)}
 .js .rv.in{opacity:1;transform:none}
@@ -257,18 +260,18 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
   </div>
   <div class="stage" aria-hidden="true">
     <i class="halo"></i><i class="orbit o1"></i><i class="orbit o2"></i>
-    <span class="fl" style="left:-9%;top:3%;--k:22;--bob:7s"><i class="spr " style="--s:132px;--m:84px;--n:32;--d:4.8s;background-image:url(img/spr-p4-211.webp)"></i></span><span class="fl" style="left:86%;top:47%;--k:30;--bob:9s"><i class="spr " style="--s:104px;--m:68px;--n:32;--d:6.4s;background-image:url(img/spr-p2-166.webp)"></i></span><span class="fl" style="left:76%;top:83%;--k:14;--bob:6s"><i class="spr " style="--s:80px;--m:56px;--n:32;--d:3.6s;background-image:url(img/spr-p8-128.webp)"></i></span><span class="fl" style="left:-2%;top:50%;--k:36;--bob:8s"><i class="spr " style="--s:64px;--m:44px;--n:32;--d:5.6s;background-image:url(img/spr-p6-102.webp)"></i></span>
+    <span class="fl" style="left:-9%;top:3%;--k:22;--bob:7s"><canvas class="spr " width="211" height="211" style="--s:132px;--m:84px" data-src="img/spr-p4-211.webp" data-n="32" data-d="4.8" data-now></canvas></span><span class="fl" style="left:86%;top:47%;--k:30;--bob:9s"><canvas class="spr " width="166" height="166" style="--s:104px;--m:68px" data-src="img/spr-p2-166.webp" data-n="32" data-d="6.4" data-now></canvas></span><span class="fl" style="left:76%;top:83%;--k:14;--bob:6s"><canvas class="spr " width="128" height="128" style="--s:80px;--m:56px" data-src="img/spr-p8-128.webp" data-n="32" data-d="3.6" data-now></canvas></span><span class="fl" style="left:-2%;top:50%;--k:36;--bob:8s"><canvas class="spr " width="102" height="102" style="--s:64px;--m:44px" data-src="img/spr-p6-102.webp" data-n="32" data-d="5.6" data-now></canvas></span>
     <span class="fl hero-phone" style="--k:8;--bob:9s"><span class="phone"><img src="img/shot-16_fill-720.webp" srcset="img/shot-16_fill-420.webp 420w, img/shot-16_fill-720.webp 720w" sizes="(min-width:960px) 290px, 56vw" width="720" height="1280" alt="Sorting planets into glass pods on level 16" decoding="async"></span></span>
-    <span class="fl hero-boss" style="--k:26;--bob:6s"><i class="spr " style="--s:208px;--m:132px;--n:20;--d:1.9s;background-image:url(img/spr-frost_freeze-240.webp)"></i></span>
+    <span class="fl hero-boss" style="--k:26;--bob:6s"><canvas class="spr " width="240" height="240" style="--s:208px;--m:132px" data-src="img/spr-frost_freeze-240.webp" data-n="20" data-d="1.9" data-now></canvas></span>
     <span class="fl hero-art" style="--k:18;--bob:8s"><img src="img/hero-640.webp" width="381" height="640" alt=""></span>
     <i class="tw" style="left:14.5%;top:85.9%;--z:16px;--dl:2.32s;--c:#fff"></i><i class="tw" style="left:92.7%;top:40.6%;--z:8px;--dl:2.07s;--c:#ffe9a8"></i><i class="tw" style="left:91.2%;top:88.4%;--z:8px;--dl:1.32s;--c:#bfe9ff"></i><i class="tw" style="left:15.2%;top:75.4%;--z:16px;--dl:2.06s;--c:#ffc1ee"></i><i class="tw" style="left:37.0%;top:87.0%;--z:12px;--dl:2.25s;--c:#fff"></i><i class="tw" style="left:52.2%;top:29.3%;--z:20px;--dl:1.77s;--c:#fff"></i><i class="tw" style="left:65.1%;top:29.5%;--z:16px;--dl:1.43s;--c:#ffc1ee"></i><i class="tw" style="left:43.2%;top:56.9%;--z:16px;--dl:1.69s;--c:#fff"></i>
   </div>
 </div></section>
-<section class="belt" aria-label="19 kinds to sort: planets, comets, rockets, aliens and a sun"><div class="track" aria-hidden="true"><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.2s" data-bg="img/spr-p0-96.webp"></i><small>Mars</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.9s" data-bg="img/spr-p1-96.webp"></i><small>Jupiter</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:5.6s" data-bg="img/spr-p2-96.webp"></i><small>Saturn</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:6.3s" data-bg="img/spr-p3-96.webp"></i><small>Toxic</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.2s" data-bg="img/spr-p4-96.webp"></i><small>Earth</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.9s" data-bg="img/spr-p5-96.webp"></i><small>Uranus</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:5.6s" data-bg="img/spr-p6-96.webp"></i><small>Neptune</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:6.3s" data-bg="img/spr-p7-96.webp"></i><small>Violet</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.2s" data-bg="img/spr-p8-96.webp"></i><small>Pink</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.9s" data-bg="img/spr-p9-96.webp"></i><small>Rock</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:5.6s" data-bg="img/spr-p10-96.webp"></i><small>Ice moon</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:6.3s" data-bg="img/spr-p11-96.webp"></i><small>Moon</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.2s" data-bg="img/spr-p0-96.webp"></i><small>Mars</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.9s" data-bg="img/spr-p1-96.webp"></i><small>Jupiter</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:5.6s" data-bg="img/spr-p2-96.webp"></i><small>Saturn</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:6.3s" data-bg="img/spr-p3-96.webp"></i><small>Toxic</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.2s" data-bg="img/spr-p4-96.webp"></i><small>Earth</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.9s" data-bg="img/spr-p5-96.webp"></i><small>Uranus</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:5.6s" data-bg="img/spr-p6-96.webp"></i><small>Neptune</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:6.3s" data-bg="img/spr-p7-96.webp"></i><small>Violet</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.2s" data-bg="img/spr-p8-96.webp"></i><small>Pink</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:4.9s" data-bg="img/spr-p9-96.webp"></i><small>Rock</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:5.6s" data-bg="img/spr-p10-96.webp"></i><small>Ice moon</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:32;--d:6.3s" data-bg="img/spr-p11-96.webp"></i><small>Moon</small></span></div><p class="belt-text">19 kinds to sort: planets, comets, rockets, aliens and a sun</p></section>
+<section class="belt" aria-label="19 kinds to sort: planets, comets, rockets, aliens and a sun"><div class="track" aria-hidden="true"><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p0-96.webp" data-n="32" data-d="4.2"></canvas><small>Mars</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p1-96.webp" data-n="32" data-d="4.9"></canvas><small>Jupiter</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p2-96.webp" data-n="32" data-d="5.6"></canvas><small>Saturn</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p3-96.webp" data-n="32" data-d="6.3"></canvas><small>Toxic</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p4-96.webp" data-n="32" data-d="4.2"></canvas><small>Earth</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p5-96.webp" data-n="32" data-d="4.9"></canvas><small>Uranus</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p6-96.webp" data-n="32" data-d="5.6"></canvas><small>Neptune</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p7-96.webp" data-n="32" data-d="6.3"></canvas><small>Violet</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p8-96.webp" data-n="32" data-d="4.2"></canvas><small>Pink</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p9-96.webp" data-n="32" data-d="4.9"></canvas><small>Rock</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p10-96.webp" data-n="32" data-d="5.6"></canvas><small>Ice moon</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p11-96.webp" data-n="32" data-d="6.3"></canvas><small>Moon</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p0-96.webp" data-n="32" data-d="4.2"></canvas><small>Mars</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p1-96.webp" data-n="32" data-d="4.9"></canvas><small>Jupiter</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p2-96.webp" data-n="32" data-d="5.6"></canvas><small>Saturn</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p3-96.webp" data-n="32" data-d="6.3"></canvas><small>Toxic</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p4-96.webp" data-n="32" data-d="4.2"></canvas><small>Earth</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p5-96.webp" data-n="32" data-d="4.9"></canvas><small>Uranus</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p6-96.webp" data-n="32" data-d="5.6"></canvas><small>Neptune</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p7-96.webp" data-n="32" data-d="6.3"></canvas><small>Violet</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p8-96.webp" data-n="32" data-d="4.2"></canvas><small>Pink</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p9-96.webp" data-n="32" data-d="4.9"></canvas><small>Rock</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p10-96.webp" data-n="32" data-d="5.6"></canvas><small>Ice moon</small></span><span class="bi"><canvas class="spr " width="96" height="96" style="--s:76px;--m:60px" data-src="img/spr-p11-96.webp" data-n="32" data-d="6.3"></canvas><small>Moon</small></span></div><p class="belt-text">19 kinds to sort: planets, comets, rockets, aliens and a sun</p></section>
 <section class="intro"><div class="wrap rv"><h2>It starts calm. Then the <em>galaxy fights back</em>.</h2><p class="lead">Tap a pod, tap another, and move the planets until every pod holds just one kind. Easy to learn, and it keeps finding new ways to surprise you.</p></div></section>
 
 <section class="show" id="bosses-intro" style="--g:#9fe8ff"><div class="wrap">
-  <div class="media rv"><i class="glow"></i><span class="phone p1"><img src="img/shot-20_boss-720.webp" srcset="img/shot-20_boss-420.webp 420w, img/shot-20_boss-720.webp 720w" sizes="(min-width:960px) 270px, 52vw" width="720" height="1280" alt="A boss fight against the Frost Leviathan" loading="lazy" decoding="async"></span><span class="fl" style="left:-14%;top:58%;--k:18;--bob:7s"><i class="spr " style="--s:168px;--m:112px;--n:20;--d:1.8s" data-bg="img/spr-nova_scorch-240.webp"></i></span><i class="tw" style="left:48.4%;top:62.5%;--z:20px;--dl:2.60s;--c:#bfe9ff"></i><i class="tw" style="left:28.2%;top:69.4%;--z:8px;--dl:1.80s;--c:#fff"></i><i class="tw" style="left:67.2%;top:54.1%;--z:12px;--dl:0.46s;--c:#bfe9ff"></i><i class="tw" style="left:9.2%;top:71.3%;--z:16px;--dl:1.65s;--c:#bfe9ff"></i></div>
+  <div class="media rv"><i class="glow"></i><span class="phone p1"><img src="img/shot-20_boss-720.webp" srcset="img/shot-20_boss-420.webp 420w, img/shot-20_boss-720.webp 720w" sizes="(min-width:960px) 270px, 52vw" width="720" height="1280" alt="A boss fight against the Frost Leviathan" loading="lazy" decoding="async"></span><span class="fl" style="left:-14%;top:58%;--k:18;--bob:7s"><canvas class="spr " width="240" height="240" style="--s:168px;--m:112px" data-src="img/spr-nova_scorch-240.webp" data-n="20" data-d="1.8"></canvas></span><i class="tw" style="left:48.4%;top:62.5%;--z:20px;--dl:2.60s;--c:#bfe9ff"></i><i class="tw" style="left:28.2%;top:69.4%;--z:8px;--dl:1.80s;--c:#fff"></i><i class="tw" style="left:67.2%;top:54.1%;--z:12px;--dl:0.46s;--c:#bfe9ff"></i><i class="tw" style="left:9.2%;top:71.3%;--z:16px;--dl:1.65s;--c:#bfe9ff"></i></div>
   <div class="text rv" style="--dl:.12s">
     <p class="eyebrow">Boss fights</p>
     <h2>Every 10 levels, a <em>boss</em> arrives</h2>
@@ -284,7 +287,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
     <h2><em>1000 levels</em> across the galaxy</h2>
     <p class="lead">New planets, comets, ships and aliens keep joining the sort. The scenery changes every 10 levels with a new cosmic phenomenon.</p>
     <ul class="points"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>Twists like frozen pods, hidden planets and supernova timers</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>Chests, landmarks and galaxy gates along the path</span></li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.500l2.600 7.900 7.900 2.600-7.900 2.600-2.600 7.900-2.600-7.900-7.900-2.600 7.900-2.600z"/></svg><span>Hard levels that pay double coins</span></li></ul>
-    <div class="tease"><div class="tease-art" aria-hidden="true"><i class="spr " style="--s:88px;--m:72px;--n:20;--d:1.9s" data-bg="img/spr-cannoneer_cannon-240.webp"></i><i class="spr " style="--s:88px;--m:72px;--n:20;--d:1.9s" data-bg="img/spr-glacier_frost-240.webp"></i></div><div><p class="tease-tag">In the works</p><h3>A second universe</h3><p>1000 more levels are on the way, with brand-new bosses that each have to be beaten in their own way.</p></div></div>
+    <div class="tease"><div class="tease-art" aria-hidden="true"><canvas class="spr " width="240" height="240" style="--s:88px;--m:72px" data-src="img/spr-cannoneer_cannon-240.webp" data-n="20" data-d="1.9" data-hold></canvas><canvas class="spr " width="240" height="240" style="--s:88px;--m:72px" data-src="img/spr-glacier_frost-240.webp" data-n="20" data-d="1.9" data-hold></canvas></div><div><p class="tease-tag">In the works</p><h3>A second universe</h3><p>1000 more levels are on the way, with brand-new bosses that each have to be beaten in their own way.</p></div></div>
   </div>
 </div></section>
 <section class="show" id="void" style="--g:#b06bff"><div class="wrap">
@@ -312,56 +315,56 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
   <div class="head rv"><h2>Meet a few of the <em>100 bosses</em></h2><p class="lead">Each one fights its own way. Here are some you will run into.</p></div>
   <ul class="boss-grid">
 <li class="boss rv" style="--g:#c45cff;--dl:0.00s">
-  <i class="spr " style="--s:176px;--m:124px;--n:20;--d:1.9s" data-bg="img/spr-maw_warp-240.webp"></i>
+  <canvas class="spr " width="240" height="240" style="--s:176px;--m:124px" data-src="img/spr-maw_warp-240.webp" data-n="20" data-d="1.9"></canvas>
   <h3>Void Maw</h3>
   <p class="chip">Warp</p>
   <p class="does">Swaps your pods around</p>
   <p class="quote">&ldquo;I hunger...&rdquo;</p>
 </li>
 <li class="boss rv" style="--g:#9fe8ff;--dl:0.08s">
-  <i class="spr " style="--s:176px;--m:124px;--n:20;--d:1.9s" data-bg="img/spr-frost_freeze-240.webp"></i>
+  <canvas class="spr " width="240" height="240" style="--s:176px;--m:124px" data-src="img/spr-frost_freeze-240.webp" data-n="20" data-d="1.9"></canvas>
   <h3>Frost Leviathan</h3>
   <p class="chip">Freeze</p>
   <p class="does">Freezes pods solid</p>
   <p class="quote">&ldquo;Swim with me, tiny one.&rdquo;</p>
 </li>
 <li class="boss rv" style="--g:#ffb347;--dl:0.16s">
-  <i class="spr " style="--s:176px;--m:124px;--n:20;--d:1.9s" data-bg="img/spr-nova_scorch-240.webp"></i>
+  <canvas class="spr " width="240" height="240" style="--s:176px;--m:124px" data-src="img/spr-nova_scorch-240.webp" data-n="20" data-d="1.9"></canvas>
   <h3>Solar Fiend</h3>
   <p class="chip">Scorch</p>
   <p class="does">Sets pods on fire</p>
   <p class="quote">&ldquo;Feel my glare!&rdquo;</p>
 </li>
 <li class="boss rv" style="--g:#b6ff4d;--dl:0.24s">
-  <i class="spr " style="--s:176px;--m:124px;--n:20;--d:1.9s" data-bg="img/spr-toxic_fog-240.webp"></i>
+  <canvas class="spr " width="240" height="240" style="--s:176px;--m:124px" data-src="img/spr-toxic_fog-240.webp" data-n="20" data-d="1.9"></canvas>
   <h3>Plague Nebula</h3>
   <p class="chip">Fog</p>
   <p class="does">Hides planets in fog</p>
   <p class="quote">&ldquo;Breathe deep...&rdquo;</p>
 </li>
 <li class="boss rv" style="--g:#ff9f1c;--dl:0.00s">
-  <i class="spr " style="--s:176px;--m:124px;--n:20;--d:1.9s" data-bg="img/spr-golem_quake-240.webp"></i>
+  <canvas class="spr " width="240" height="240" style="--s:176px;--m:124px" data-src="img/spr-golem_quake-240.webp" data-n="20" data-d="1.9"></canvas>
   <h3>Stone Golem</h3>
   <p class="chip">Quake</p>
   <p class="does">Shakes away your moves</p>
   <p class="quote">&ldquo;ME SMASH.&rdquo;</p>
 </li>
 <li class="boss rv" style="--g:#e8f0ff;--dl:0.08s">
-  <i class="spr " style="--s:176px;--m:124px;--n:20;--d:1.9s" data-bg="img/spr-jelly_mirror-240.webp"></i>
+  <canvas class="spr " width="240" height="240" style="--s:176px;--m:124px" data-src="img/spr-jelly_mirror-240.webp" data-n="20" data-d="1.9"></canvas>
   <h3>Mirror Jelly</h3>
   <p class="chip">Mirror</p>
   <p class="does">Flips the whole board</p>
   <p class="quote">&ldquo;Bloop... bloop...&rdquo;</p>
 </li>
 <li class="boss rv" style="--g:#ff4d6a;--dl:0.16s">
-  <i class="spr " style="--s:176px;--m:124px;--n:20;--d:1.9s" data-bg="img/spr-mecha_blackout-240.webp"></i>
+  <canvas class="spr " width="240" height="240" style="--s:176px;--m:124px" data-src="img/spr-mecha_blackout-240.webp" data-n="20" data-d="1.9"></canvas>
   <h3>Shadow Drone</h3>
   <p class="chip">Blackout</p>
   <p class="does">Turns the lights off</p>
   <p class="quote">&ldquo;TARGET ACQUIRED.&rdquo;</p>
 </li>
 <li class="boss rv mystery" style="--g:#fff0a0;--dl:0.24s">
-  <i class="spr " style="--s:176px;--m:124px;--n:20;--d:1.9s" data-bg="img/spr-maw_core-240.webp"></i>
+  <canvas class="spr " width="240" height="240" style="--s:176px;--m:124px" data-src="img/spr-maw_core-240.webp" data-n="20" data-d="1.9" data-hold></canvas>
   <h3>???</h3>
   <p class="chip">Boss 100</p>
   <p class="does">Find out for yourself</p>
@@ -400,12 +403,15 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
 <script>
 (function(){
   var calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var root = document.documentElement;
+  var root = document.documentElement, lite = false;
+  try { lite = sessionStorage.getItem("lite") === "1"; } catch (e) {}
+  if (/[?&]calm\b/.test(location.search)) lite = true;      /* add ?calm to the address to see calm mode */
+  if (lite) root.classList.add("lite");
 
-  /* sky: every star is painted once; a few big ones twinkle, each inside its own small patch */
+  /* ---- sky: every star is painted once; a few big ones twinkle inside their own small patch ---- */
   var back = document.getElementById("sky"), front = document.getElementById("sky2");
   var bg = back.getContext("2d"), fg = front.getContext("2d");
-  var W = 0, H = 0, big = [], shot = null, box = null, nextShot = 3000, last = 0;
+  var W = 0, H = 0, big = [], shot = null, box = null, nextShot = 3000, lastSky = 0;
   var tints = ["255,255,255", "255,232,170", "190,222,255", "255,196,240"];
   function star(g, s, a){
     g.fillStyle = "rgba(" + s.c + "," + a + ")";
@@ -416,6 +422,15 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
       g.beginPath(); g.moveTo(s.x - l, s.y); g.lineTo(s.x + l, s.y); g.moveTo(s.x, s.y - l); g.lineTo(s.x, s.y + l); g.stroke();
     }
   }
+  function still(){ fg.clearRect(0, 0, W, H); for (var i = 0; i < big.length; i++) star(fg, big[i], .8); shot = null; box = null; }
+  /* calm mode: the sky becomes one picture behind the page that scrolls with it, so nothing is layered */
+  function flatten(){
+    try {
+      bg.save(); bg.setTransform(1, 0, 0, 1, 0, 0); bg.drawImage(front, 0, 0); bg.restore();
+      root.style.setProperty("--stars", "url(" + back.toDataURL("image/png") + ")");
+      root.style.setProperty("--starsz", W + "px " + H + "px");
+    } catch (e) {}
+  }
   function size(){
     if (innerWidth === W && innerHeight <= H) return;   /* a phone hiding its address bar is not a new sky */
     var d = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -425,15 +440,14 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
     for (var i = 0, n = Math.round(Math.min(260, W * H / 5200)); i < n; i++){
       var s = {x: Math.random() * W, y: Math.random() * H, c: tints[Math.random() * tints.length | 0], p: Math.random() * 6.28, v: .7 + Math.random() * 2.2};
       s.big = Math.random() < .13; s.r = s.big ? 1.3 + Math.random() * 1.2 : .4 + Math.random() * .9;
-      if (s.big && !calm && big.length < 34) big.push(s); else star(bg, s, s.big ? .8 : .3 + Math.random() * .6);
+      if (s.big && big.length < 34) big.push(s); else star(bg, s, s.big ? .8 : .3 + Math.random() * .6);
     }
+    if (calm || lite) still();
+    if (lite) flatten();
   }
-  var prev = 0;
-  function tick(t){
-    requestAnimationFrame(tick);
-    var dt = Math.min(t - prev, 50); prev = t;
-    if (t - last >= 33){
-      last = t;
+  function sky(t, dt){
+    if (t - lastSky >= 33){
+      lastSky = t;
       for (var i = 0; i < big.length; i++){
         var s = big[i], l = s.r * 6.5 + 2;
         fg.clearRect(s.x - l, s.y - l, l * 2, l * 2);
@@ -458,27 +472,98 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
     }
   }
   size(); addEventListener("resize", size);
-  if (!calm) requestAnimationFrame(tick);
 
-  /* lazy sprite strips, scroll reveal, counters, and a "live" mark on the sections in view */
-  var io = "IntersectionObserver" in window;
-  var sprites = document.querySelectorAll(".spr[data-bg]");
-  function load(el){   /* decode the strip off the main thread first, so showing it never stalls a frame */
-    var u = el.dataset.bg, im = new Image();
-    el.removeAttribute("data-bg"); im.src = u;
-    (im.decode ? im.decode() : Promise.resolve()).catch(function(){}).then(function(){ el.style.backgroundImage = "url(" + u + ")"; });
+  /* ---- sprites: a small canvas each, pictures drawn from one decoded strip, each melting into the next ---- */
+  var players = [], lastSpr = 0;
+  function paint(p, k, a){
+    var g = p.g, s = p.px;
+    g.clearRect(0, 0, s, s); g.globalAlpha = 1;
+    g.drawImage(p.img, k * s, 0, s, s, 0, 0, s, s);
+    if (a > .02){ g.globalAlpha = a; g.drawImage(p.img, ((k + 1) % p.n) * s, 0, s, s, 0, 0, s, s); }
   }
+  function loadSprite(p){
+    if (p.asked) return;
+    p.asked = true;
+    var im = new Image();
+    function ready(){ if (!p.img && im.naturalWidth){ p.img = im; paint(p, 0, 0); } }
+    im.onload = ready; im.src = p.c.dataset.src;
+    if (im.decode) im.decode().then(ready, function(){});
+  }
+  document.querySelectorAll("canvas.spr").forEach(function(c){
+    var p = {c: c, g: c.getContext("2d"), n: +c.dataset.n, d: +c.dataset.d * 1000, px: c.width, img: null, asked: false,
+             on: false, hold: c.hasAttribute("data-hold"), hot: false, drawn: -1, off: Math.random() * 2000};
+    players.push(p); c._p = p;
+    if (c.hasAttribute("data-now")) loadSprite(p);
+    if (p.hold){
+      var host = c.closest(".boss,.tease") || c;
+      host.addEventListener("pointerenter", function(){ p.hot = true; });
+      host.addEventListener("pointerleave", function(){ p.hot = false; });
+    }
+  });
+  function sprites(t){
+    if (t - lastSpr < (lite ? 90 : 15)) return;     /* calm mode: about 11 pictures a second, no melting */
+    lastSpr = t;
+    for (var i = 0; i < players.length; i++){
+      var p = players[i];
+      if (!p.on || !p.img || (p.hold && !p.hot)) continue;
+      var pos = ((t + p.off) % p.d) / p.d * p.n, k = pos | 0;
+      if (lite){ if (k !== p.drawn){ paint(p, k, 0); p.drawn = k; } } else paint(p, k, pos - k);
+    }
+  }
+
+  /* ---- the planet belt slides by itself and can be dragged with a finger or the mouse ---- */
+  var beltSec = document.querySelector(".belt"), track = document.querySelector(".track");
+  var bx = 0, half = 0, dragging = false, lastX = 0;
+  function measure(){ if (track) half = track.scrollWidth / 2; }
+  if (track){
+    measure(); addEventListener("resize", measure); addEventListener("load", measure);
+    track.addEventListener("pointerdown", function(e){ dragging = true; lastX = e.clientX; track.classList.add("drag"); try { track.setPointerCapture(e.pointerId); } catch (x) {} });
+    track.addEventListener("pointermove", function(e){ if (dragging){ bx += e.clientX - lastX; lastX = e.clientX; } });
+    ["pointerup", "pointercancel"].forEach(function(n){ track.addEventListener(n, function(){ dragging = false; track.classList.remove("drag"); }); });
+  }
+  function belt(dt){
+    if (!half || !beltSec.classList.contains("live")) return;
+    if (!dragging && !calm) bx -= dt * .045;
+    if (bx <= -half) bx += half; else if (bx > 0) bx -= half;
+    track.style.transform = "translate3d(" + bx.toFixed(2) + "px,0,0)";
+  }
+
+  /* ---- one loop; it also watches the pace and calms the page down on a slow device ---- */
+  function goLite(){
+    lite = true; root.classList.add("lite"); still(); flatten();
+    try { sessionStorage.setItem("lite", "1"); } catch (e) {}
+  }
+  var prev = 0, acc = 0, cnt = 0, slowRun = 0, watchFrom = 0;
+  addEventListener("load", function(){ watchFrom = performance.now() + 2500; });
+  function frame(t){
+    requestAnimationFrame(frame);
+    var dt = Math.min(t - prev, 100); prev = t;
+    if (!lite && watchFrom && t > watchFrom){
+      acc += dt; cnt++;
+      if (acc >= 1000){ slowRun = cnt < 26 ? slowRun + 1 : 0; acc = 0; cnt = 0; if (slowRun >= 2) goLite(); }
+    }
+    if (track) belt(dt);
+    if (calm) return;
+    if (!lite) sky(t, dt);
+    sprites(t);
+  }
+  requestAnimationFrame(frame);
+
+  /* ---- what is on screen: lazy strips, running sprites, scroll reveal, live sections, counters ---- */
+  var io = "IntersectionObserver" in window;
   if (io){
     root.classList.add("io");
     var lv = new IntersectionObserver(function(es){ es.forEach(function(e){ e.target.classList.toggle("live", e.isIntersecting); }); }, {rootMargin: "80px"});
     document.querySelectorAll("main>section").forEach(function(el){ lv.observe(el); });
-    var lz = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ load(e.target); lz.unobserve(e.target); } }); }, {rootMargin: "400px"});
-    sprites.forEach(function(el){ lz.observe(el); });
+    var near = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ loadSprite(e.target._p); near.unobserve(e.target); } }); }, {rootMargin: "500px"});
+    var seen = new IntersectionObserver(function(es){ es.forEach(function(e){ e.target._p.on = e.isIntersecting; }); }, {rootMargin: "60px"});
+    players.forEach(function(p){ near.observe(p.c); seen.observe(p.c); });
     var rv = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add("in"); rv.unobserve(e.target); } }); }, {threshold: .14});
     document.querySelectorAll(".rv").forEach(function(el){ rv.observe(el); });
   } else {
-    sprites.forEach(load);
+    players.forEach(function(p){ p.on = true; loadSprite(p); });
     document.querySelectorAll(".rv").forEach(function(el){ el.classList.add("in"); });
+    if (beltSec) beltSec.classList.add("live");
   }
   if (!calm) document.querySelectorAll("[data-count]").forEach(function(el){
     var to = +el.dataset.count, t0 = null;
@@ -490,7 +575,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
   /* the floating things lean away from the pointer: only in the sections on screen */
   var raf = 0, mx = 0, my = 0;
   addEventListener("pointermove", function(e){
-    if (e.pointerType === "touch") return;
+    if (lite || e.pointerType === "touch") return;
     mx = (e.clientX / innerWidth - .5).toFixed(3); my = (e.clientY / innerHeight - .5).toFixed(3);
     if (raf) return;
     raf = requestAnimationFrame(function(){
@@ -502,6 +587,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
   /* a burst of sparks wherever you click or tap */
   var hues = ["#fff", "#ffe07a", "#ff9be0", "#9fe8ff"];
   addEventListener("pointerdown", function(e){
+    if (lite) return;
     for (var i = 0; i < 8; i++){
       var s = document.createElement("i"), a = Math.random() * 6.28, r = 34 + Math.random() * 54;
       s.className = "spk";
