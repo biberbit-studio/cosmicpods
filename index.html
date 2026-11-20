@@ -35,27 +35,26 @@ ul{list-style:none;margin:0;padding:0}
 .wrap{position:relative;max-width:1160px;margin:0 auto;padding:0 22px}
 
 /* sky: twinkling canvas + drifting nebula, fixed behind everything */
-#sky,.nebula{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1}
+#sky,#sky2,.nebula{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1}
 .nebula{z-index:-2;background:
   radial-gradient(60vw 50vh at 85% 8%,color-mix(in srgb,var(--pink) 34%,transparent),transparent 70%),
   radial-gradient(70vw 60vh at 8% 22%,color-mix(in srgb,var(--violet) 46%,transparent),transparent 70%),
   radial-gradient(60vw 50vh at 60% 95%,color-mix(in srgb,var(--cyan) 20%,transparent),transparent 70%),
-  var(--bg);
-  animation:nebula 26s ease-in-out infinite alternate}
-@keyframes nebula{to{transform:scale(1.12) translate(-2%,2%);filter:hue-rotate(18deg)}}
+  var(--bg)}
 
 /* sprites: one-row strips stepped with CSS */
-.spr{display:block;--z:var(--s);width:var(--z);height:var(--z);background-repeat:no-repeat;background-size:calc(var(--z)*var(--n)) var(--z);animation:spr var(--d) steps(var(--n)) infinite}
-@keyframes spr{to{background-position-x:calc(var(--z)*var(--n)*-1)}}
+.spr{display:block;position:relative;overflow:hidden;--z:var(--s);width:var(--z);height:var(--z);background-repeat:no-repeat;background-size:0 0}
+.spr::before{content:"";position:absolute;left:0;top:0;height:100%;width:calc(var(--z)*var(--n));background-image:inherit;background-repeat:no-repeat;background-size:100% 100%;animation:spr var(--d) steps(var(--n)) infinite}
+@keyframes spr{to{transform:translateX(calc(var(--z)*var(--n)*-1))}}
 .dimg{--z:var(--s);width:var(--z);height:auto;max-width:none;filter:drop-shadow(0 12px 28px rgba(0,0,0,.5))}
 @media(max-width:759px){.spr,.dimg{--z:var(--m)}}
 .fl{position:absolute;display:block;translate:calc(var(--px,0)*var(--k,12)*1px) calc(var(--py,0)*var(--k,12)*1px);transition:translate .5s cubic-bezier(.2,.7,.2,1);animation:bob var(--bob,7s) ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-14px) rotate(1.5deg)}}
-.tw{position:absolute;width:var(--z);height:var(--z);background:var(--c);clip-path:polygon(50% 0,58% 42%,100% 50%,58% 58%,50% 100%,42% 58%,0 50%,42% 42%);animation:tw 3.4s ease-in-out var(--dl) infinite;opacity:0;pointer-events:none;filter:drop-shadow(0 0 6px var(--c))}
+.tw{position:absolute;width:var(--z);height:var(--z);background:var(--c);clip-path:polygon(50% 0,58% 42%,100% 50%,58% 58%,50% 100%,42% 58%,0 50%,42% 42%);animation:tw 3.4s ease-in-out var(--dl) infinite;opacity:0;pointer-events:none}
 @keyframes tw{0%,100%{opacity:0;transform:scale(.2) rotate(0)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
 
 /* top bar */
-.top{position:sticky;top:0;z-index:30;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(13,7,34,.62);border-bottom:1px solid var(--line)}
+.top{position:sticky;top:0;z-index:30;background:rgba(13,7,34,.93);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;gap:22px;height:60px}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:1.25rem;color:var(--text);text-decoration:none;letter-spacing:.01em}
 .brand img{width:36px;height:36px;border-radius:9px}
@@ -68,24 +67,12 @@ ul{list-style:none;margin:0;padding:0}
 /* hero */
 .hero{position:relative;padding:34px 0 30px}
 .hero>.wrap{display:grid;gap:26px;align-items:center}
-.logo{margin:0;max-width:min(520px,86vw);filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))}
+.logo{margin:0;max-width:min(520px,86vw)}
 .lg{position:relative;display:block;animation:pop .9s cubic-bezier(.2,1.5,.4,1) both}
 .lg.l2{width:74%;margin-top:-3%;animation-delay:.18s}
 .lg img{width:100%}
-.shine{position:absolute;inset:0;-webkit-mask:var(--mk) center/100% 100% no-repeat;mask:var(--mk) center/100% 100% no-repeat;background:linear-gradient(110deg,transparent 42%,rgba(255,255,255,.9) 50%,transparent 58%) no-repeat;background-size:300% 100%;animation:shine 5s ease-in-out 1.2s infinite}
-.l2 .shine{animation-delay:1.6s}
-@keyframes shine{0%{background-position:120% 0}45%,100%{background-position:-60% 0}}
-@keyframes pop{from{opacity:0;transform:scale(.55) translateY(20px)}}
-.tagline{font-size:clamp(1.1rem,2.4vw,1.4rem);color:var(--muted);max-width:32ch;margin:22px 0 28px;font-weight:500}
-.cta{position:relative;display:inline-flex;align-items:center;gap:12px;padding:17px 30px;border-radius:999px;font-weight:700;font-size:1.12rem;text-decoration:none;overflow:hidden;isolation:isolate;min-height:56px}
-.cta svg{width:22px;height:22px;flex:none}
-.cta.go{color:#1d1140;background:linear-gradient(180deg,#ffe68a,var(--gold) 55%,#f29a1f);box-shadow:0 6px 0 #a35a06,0 0 46px -6px var(--gold);transition:transform .15s,box-shadow .15s;animation:pulse 2.8s ease-in-out infinite}
-.cta.go:hover{transform:translateY(-3px)}
-.cta.go:active{transform:translateY(3px);box-shadow:0 3px 0 #a35a06,0 0 30px -6px var(--gold)}
-.cta.soon{color:var(--text);border:2px solid transparent;background:linear-gradient(#1a1042,#1a1042) padding-box,linear-gradient(110deg,var(--gold),var(--pink),var(--cyan),var(--violet),var(--gold)) border-box;background-size:auto,300% 100%;animation:flow 7s linear infinite;box-shadow:0 0 40px -10px var(--pink)}
-.cta::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%) no-repeat;background-size:250% 100%;animation:shine 3.6s ease-in-out infinite}
-@keyframes flow{to{background-position:0 0,300% 0}}
-@keyframes pulse{50%{box-shadow:0 6px 0 #a35a06,0 0 70px 0 var(--gold)}}
+.shine{position:absolute;inset:0;overflow:hidden;-webkit-mask:var(--mk) center/100% 100% no-repeat;mask:var(--mk) center/100% 100% no-repeat}
+.shine::after,.cta::after{z-index:-1;opacity:.6;animation-duration:3.6s;animation-delay:0s}
 .note{font-size:.95rem;color:var(--muted);margin:14px 0 0}
 .stats{display:flex;gap:10px;margin-top:34px}
 .stats li{flex:0 1 auto;min-width:0;padding:12px 14px;border-radius:18px;background:var(--card);border:1px solid var(--line)}
@@ -95,12 +82,12 @@ ul{list-style:none;margin:0;padding:0}
 .stage{position:relative;justify-self:center;width:min(100%,440px);aspect-ratio:1/1.16;margin-top:8px}
 .halo{position:absolute;inset:8% 4%;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--pink) 60%,transparent),color-mix(in srgb,var(--violet) 38%,transparent) 55%,transparent);animation:breathe 6s ease-in-out infinite}
 @keyframes breathe{50%{transform:scale(1.1);opacity:.8}}
-.orbit{position:absolute;left:50%;top:50%;border-radius:50%;border:1.5px solid rgba(255,255,255,.16);translate:-50% -50%}
+.orbit{position:absolute;left:50%;top:50%;border-radius:50%;border:1.5px solid rgba(255,255,255,.16);transform:translate(-50%,-50%)}
 .orbit::after{content:"";position:absolute;top:-5px;left:50%;width:10px;height:10px;border-radius:50%;background:#fff;box-shadow:0 0 16px 4px var(--gold)}
 .o1{width:104%;height:104%;animation:turn 26s linear infinite}
 .o2{width:76%;height:76%;animation:turn 18s linear infinite reverse;border-color:rgba(255,255,255,.1)}
 .o2::after{box-shadow:0 0 16px 4px var(--cyan)}
-@keyframes turn{to{rotate:360deg}}
+@keyframes turn{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
 .phone{display:block;border-radius:14% / 7.8%;padding:3.2%;background:linear-gradient(150deg,#51419a,#150c33 45%,#2a1d5e);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22),0 40px 80px -24px rgba(0,0,0,.85),0 0 90px -20px var(--g,var(--pink))}
 .phone img{width:100%;border-radius:11.5% / 6.5%}
 .hero-phone{left:24%;top:3%;width:52%}
@@ -120,7 +107,6 @@ ul{list-style:none;margin:0;padding:0}
 .belt:hover .track{animation-play-state:paused}
 @keyframes slide{to{transform:translateX(-50%)}}
 .bi{display:grid;justify-items:center;gap:6px;padding:0 20px}
-.bi .spr{filter:drop-shadow(0 8px 14px rgba(0,0,0,.5))}
 .bi small{font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .belt-text{text-align:center;margin:16px 0 0;font-weight:500;color:var(--text);padding:0 22px}
 
@@ -159,21 +145,22 @@ h3{font-family:var(--display);font-weight:400;letter-spacing:.01em}
 
 .boss-grid{display:grid;gap:14px;grid-template-columns:repeat(2,1fr)}
 .boss{position:relative;border-radius:26px;padding:16px 12px 20px;text-align:center;background:radial-gradient(120% 70% at 50% 0,color-mix(in srgb,var(--g) 26%,transparent),transparent 72%),var(--card);border:1px solid color-mix(in srgb,var(--g) 40%,transparent)}
-.boss .spr{margin:0 auto;filter:drop-shadow(0 0 22px color-mix(in srgb,var(--g) 70%,transparent));transition:scale .3s cubic-bezier(.2,1.6,.4,1)}
+.boss .spr{margin:0 auto;transition:scale .3s cubic-bezier(.2,1.6,.4,1)}
 .boss:hover{box-shadow:0 24px 60px -26px var(--g),inset 0 0 0 1px color-mix(in srgb,var(--g) 60%,transparent)}
 .boss:hover .spr{scale:1.12}
 .boss h3{margin:6px 0 8px;font-size:1.3rem;line-height:1.1}
 .chip{display:inline-block;margin:0;padding:4px 12px;border-radius:999px;font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#12092b;background:var(--g)}
 .does{margin:10px 0 4px;font-weight:500;font-size:.98rem}
 .quote{margin:0;color:var(--muted);font-style:italic;font-size:.92rem}
-.mystery .spr{filter:brightness(0) drop-shadow(0 0 16px var(--g));animation-play-state:paused}
-.mystery:hover .spr{animation-play-state:running}
+.mystery .spr{filter:brightness(0)}
+.mystery .spr::before{animation-play-state:paused}
+.mystery:hover .spr::before{animation-play-state:running}
 @media(min-width:900px){.boss-grid{grid-template-columns:repeat(4,1fr);gap:18px}.boss{padding:20px 16px 24px}}
 
 .pu-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
 .pu{padding:22px 16px;border-radius:24px;background:var(--card);border:1px solid var(--line);text-align:center;transition:border-color .25s,background .25s}
 .pu:hover{border-color:color-mix(in srgb,var(--gold) 60%,transparent);background:rgba(255,255,255,.09)}
-.pu img{width:92px;height:92px;object-fit:contain;margin:0 auto 10px;animation:bob 5s ease-in-out var(--bd) infinite;filter:drop-shadow(0 12px 18px rgba(0,0,0,.5))}
+.pu img{width:92px;height:92px;object-fit:contain;margin:0 auto 10px;animation:bob 5s ease-in-out var(--bd) infinite}
 .pu h3{margin:0 0 4px;font-size:1.25rem}
 .pu p{margin:0;color:var(--muted);font-size:.97rem}
 
@@ -190,7 +177,7 @@ h3{font-family:var(--display);font-weight:400;letter-spacing:.01em}
 .nt p{margin:0;color:var(--muted)}
 
 .band{position:relative;overflow:hidden;text-align:center;padding:110px 0 120px;border-top:1px solid var(--line)}
-.band .spin{position:absolute;left:50%;top:50%;width:min(130vw,900px);max-width:none;translate:-50% -50%;opacity:.5;animation:turn 90s linear infinite}
+.band .spin{position:absolute;left:50%;top:50%;width:min(130vw,900px);max-width:none;transform:translate(-50%,-50%);opacity:.5;animation:turn 90s linear infinite}
 .band .lead{margin-inline:auto}
 
 footer{position:relative;padding:34px 0 44px;border-top:1px solid var(--line);font-size:.95rem;color:var(--muted);background:rgba(8,4,22,.6)}
@@ -201,6 +188,8 @@ footer a{color:var(--text)}
 footer nav{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center}
 footer nav a{min-height:44px;display:inline-flex;align-items:center}
 
+/* sections outside the screen stop animating */
+.io main>section:not(.live) *,.io main>section:not(.live) *::before,.io main>section:not(.live) *::after{animation-play-state:paused!important}
 /* scroll reveal */
 .js .rv{opacity:0;transform:translateY(34px);transition:opacity .8s ease var(--dl,0s),transform .8s cubic-bezier(.2,.8,.2,1) var(--dl,0s)}
 .js .rv.in{opacity:1;transform:none}
@@ -218,7 +207,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
 </head>
 <body>
 <div class="nebula" aria-hidden="true"></div>
-<canvas id="sky" aria-hidden="true"></canvas>
+<canvas id="sky" aria-hidden="true"></canvas><canvas id="sky2" aria-hidden="true"></canvas>
 
 <header class="top"><div class="wrap">
   <a class="brand" href="#"><img src="img/icon-192.png" width="36" height="36" alt="">CosmicPods</a>
@@ -237,18 +226,18 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
   </div>
   <div class="stage" aria-hidden="true">
     <i class="halo"></i><i class="orbit o1"></i><i class="orbit o2"></i>
-    <span class="fl" style="left:-9%;top:3%;--k:22;--bob:7s"><i class="spr " style="--s:132px;--m:84px;--n:32;--d:4.8s;background-image:url(img/spr-p4-211.webp)"></i></span><span class="fl" style="left:86%;top:47%;--k:30;--bob:9s"><i class="spr " style="--s:104px;--m:68px;--n:32;--d:6.4s;background-image:url(img/spr-p2-166.webp)"></i></span><span class="fl" style="left:76%;top:83%;--k:14;--bob:6s"><i class="spr " style="--s:78px;--m:54px;--n:32;--d:3.6s;background-image:url(img/spr-p8-125.webp)"></i></span><span class="fl" style="left:-2%;top:50%;--k:36;--bob:8s"><i class="spr " style="--s:62px;--m:44px;--n:32;--d:5.6s;background-image:url(img/spr-p6-99.webp)"></i></span>
+    <span class="fl" style="left:-9%;top:3%;--k:22;--bob:7s"><i class="spr " style="--s:132px;--m:84px;--n:32;--d:4.8s;background-image:url(img/spr-p4-211.webp)"></i></span><span class="fl" style="left:86%;top:47%;--k:30;--bob:9s"><i class="spr " style="--s:104px;--m:68px;--n:32;--d:6.4s;background-image:url(img/spr-p2-166.webp)"></i></span><span class="fl" style="left:76%;top:83%;--k:14;--bob:6s"><i class="spr " style="--s:80px;--m:56px;--n:32;--d:3.6s;background-image:url(img/spr-p8-128.webp)"></i></span><span class="fl" style="left:-2%;top:50%;--k:36;--bob:8s"><i class="spr " style="--s:64px;--m:44px;--n:32;--d:5.6s;background-image:url(img/spr-p6-102.webp)"></i></span>
     <span class="fl hero-phone" style="--k:8;--bob:9s"><span class="phone"><img src="img/shot-16_fill-720.webp" srcset="img/shot-16_fill-420.webp 420w, img/shot-16_fill-720.webp 720w" sizes="(min-width:960px) 290px, 56vw" width="720" height="1280" alt="Sorting planets into glass pods on level 16" decoding="async"></span></span>
-    <span class="fl hero-boss" style="--k:26;--bob:6s"><i class="spr " style="--s:210px;--m:132px;--n:20;--d:1.9s;background-image:url(img/spr-frost_freeze-240.webp)"></i></span>
+    <span class="fl hero-boss" style="--k:26;--bob:6s"><i class="spr " style="--s:208px;--m:132px;--n:20;--d:1.9s;background-image:url(img/spr-frost_freeze-240.webp)"></i></span>
     <span class="fl hero-art" style="--k:18;--bob:8s"><img src="img/hero-640.webp" width="381" height="640" alt=""></span>
-    <i class="tw" style="left:14.5%;top:85.9%;--z:16px;--dl:2.32s;--c:#fff"></i><i class="tw" style="left:92.7%;top:40.6%;--z:8px;--dl:2.07s;--c:#ffe9a8"></i><i class="tw" style="left:91.2%;top:88.4%;--z:8px;--dl:1.32s;--c:#bfe9ff"></i><i class="tw" style="left:15.2%;top:75.4%;--z:16px;--dl:2.06s;--c:#ffc1ee"></i><i class="tw" style="left:37.0%;top:87.0%;--z:12px;--dl:2.25s;--c:#fff"></i><i class="tw" style="left:52.2%;top:29.3%;--z:20px;--dl:1.77s;--c:#fff"></i><i class="tw" style="left:65.1%;top:29.5%;--z:16px;--dl:1.43s;--c:#ffc1ee"></i><i class="tw" style="left:43.2%;top:56.9%;--z:16px;--dl:1.69s;--c:#fff"></i><i class="tw" style="left:48.4%;top:62.5%;--z:20px;--dl:2.60s;--c:#bfe9ff"></i><i class="tw" style="left:28.2%;top:69.4%;--z:8px;--dl:1.80s;--c:#fff"></i><i class="tw" style="left:67.2%;top:54.1%;--z:12px;--dl:0.46s;--c:#bfe9ff"></i><i class="tw" style="left:9.2%;top:71.3%;--z:16px;--dl:1.65s;--c:#bfe9ff"></i><i class="tw" style="left:6.4%;top:58.2%;--z:20px;--dl:2.99s;--c:#ffe9a8"></i><i class="tw" style="left:85.2%;top:91.5%;--z:16px;--dl:2.51s;--c:#bfe9ff"></i>
+    <i class="tw" style="left:14.5%;top:85.9%;--z:16px;--dl:2.32s;--c:#fff"></i><i class="tw" style="left:92.7%;top:40.6%;--z:8px;--dl:2.07s;--c:#ffe9a8"></i><i class="tw" style="left:91.2%;top:88.4%;--z:8px;--dl:1.32s;--c:#bfe9ff"></i><i class="tw" style="left:15.2%;top:75.4%;--z:16px;--dl:2.06s;--c:#ffc1ee"></i><i class="tw" style="left:37.0%;top:87.0%;--z:12px;--dl:2.25s;--c:#fff"></i><i class="tw" style="left:52.2%;top:29.3%;--z:20px;--dl:1.77s;--c:#fff"></i><i class="tw" style="left:65.1%;top:29.5%;--z:16px;--dl:1.43s;--c:#ffc1ee"></i><i class="tw" style="left:43.2%;top:56.9%;--z:16px;--dl:1.69s;--c:#fff"></i>
   </div>
 </div></section>
 <section class="belt" aria-label="19 kinds to sort: planets, comets, rockets, aliens and a sun"><div class="track" aria-hidden="true"><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.2s" data-bg="img/spr-p0-112.webp"></i><small>Mars</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.8000000000000003s" data-bg="img/spr-p1-112.webp"></i><small>Jupiter</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:4.4s" data-bg="img/spr-p2-112.webp"></i><small>Saturn</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:5.0s" data-bg="img/spr-p3-112.webp"></i><small>Toxic</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.2s" data-bg="img/spr-p4-112.webp"></i><small>Earth</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.8000000000000003s" data-bg="img/spr-p5-112.webp"></i><small>Uranus</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:4.4s" data-bg="img/spr-p6-112.webp"></i><small>Neptune</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:5.0s" data-bg="img/spr-p7-112.webp"></i><small>Violet</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.2s" data-bg="img/spr-p8-112.webp"></i><small>Pink</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.8000000000000003s" data-bg="img/spr-p9-112.webp"></i><small>Rock</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:4.4s" data-bg="img/spr-p10-112.webp"></i><small>Ice moon</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:5.0s" data-bg="img/spr-p11-112.webp"></i><small>Moon</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.2s" data-bg="img/spr-p0-112.webp"></i><small>Mars</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.8000000000000003s" data-bg="img/spr-p1-112.webp"></i><small>Jupiter</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:4.4s" data-bg="img/spr-p2-112.webp"></i><small>Saturn</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:5.0s" data-bg="img/spr-p3-112.webp"></i><small>Toxic</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.2s" data-bg="img/spr-p4-112.webp"></i><small>Earth</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.8000000000000003s" data-bg="img/spr-p5-112.webp"></i><small>Uranus</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:4.4s" data-bg="img/spr-p6-112.webp"></i><small>Neptune</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:5.0s" data-bg="img/spr-p7-112.webp"></i><small>Violet</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.2s" data-bg="img/spr-p8-112.webp"></i><small>Pink</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:3.8000000000000003s" data-bg="img/spr-p9-112.webp"></i><small>Rock</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:4.4s" data-bg="img/spr-p10-112.webp"></i><small>Ice moon</small></span><span class="bi"><i class="spr " style="--s:76px;--m:60px;--n:16;--d:5.0s" data-bg="img/spr-p11-112.webp"></i><small>Moon</small></span></div><p class="belt-text">19 kinds to sort: planets, comets, rockets, aliens and a sun</p></section>
 <section class="intro"><div class="wrap rv"><h2>It starts calm. Then the <em>galaxy fights back</em>.</h2><p class="lead">Tap a pod, tap another, and move the planets until every pod holds just one kind. Easy to learn, and it keeps finding new ways to surprise you.</p></div></section>
 
 <section class="show" id="bosses-intro" style="--g:#9fe8ff"><div class="wrap">
-  <div class="media rv"><i class="glow"></i><span class="phone p1"><img src="img/shot-20_boss-720.webp" srcset="img/shot-20_boss-420.webp 420w, img/shot-20_boss-720.webp 720w" sizes="(min-width:960px) 270px, 52vw" width="720" height="1280" alt="A boss fight against the Frost Leviathan" loading="lazy" decoding="async"></span><span class="fl" style="left:-14%;top:58%;--k:18;--bob:7s"><i class="spr " style="--s:170px;--m:110px;--n:20;--d:1.8s" data-bg="img/spr-nova_scorch-240.webp"></i></span><i class="tw" style="left:23.6%;top:60.6%;--z:8px;--dl:0.52s;--c:#bfe9ff"></i><i class="tw" style="left:59.5%;top:21.5%;--z:20px;--dl:0.94s;--c:#fff"></i><i class="tw" style="left:67.0%;top:75.6%;--z:12px;--dl:1.16s;--c:#fff"></i><i class="tw" style="left:83.5%;top:28.3%;--z:12px;--dl:3.44s;--c:#fff"></i><i class="tw" style="left:52.1%;top:32.6%;--z:12px;--dl:2.78s;--c:#ffc1ee"></i><i class="tw" style="left:51.9%;top:58.8%;--z:10px;--dl:3.13s;--c:#ffc1ee"></i><i class="tw" style="left:86.1%;top:49.1%;--z:10px;--dl:0.04s;--c:#ffe9a8"></i><i class="tw" style="left:93.5%;top:22.4%;--z:8px;--dl:1.10s;--c:#ffc1ee"></i></div>
+  <div class="media rv"><i class="glow"></i><span class="phone p1"><img src="img/shot-20_boss-720.webp" srcset="img/shot-20_boss-420.webp 420w, img/shot-20_boss-720.webp 720w" sizes="(min-width:960px) 270px, 52vw" width="720" height="1280" alt="A boss fight against the Frost Leviathan" loading="lazy" decoding="async"></span><span class="fl" style="left:-14%;top:58%;--k:18;--bob:7s"><i class="spr " style="--s:168px;--m:112px;--n:20;--d:1.8s" data-bg="img/spr-nova_scorch-240.webp"></i></span><i class="tw" style="left:48.4%;top:62.5%;--z:20px;--dl:2.60s;--c:#bfe9ff"></i><i class="tw" style="left:28.2%;top:69.4%;--z:8px;--dl:1.80s;--c:#fff"></i><i class="tw" style="left:67.2%;top:54.1%;--z:12px;--dl:0.46s;--c:#bfe9ff"></i><i class="tw" style="left:9.2%;top:71.3%;--z:16px;--dl:1.65s;--c:#bfe9ff"></i></div>
   <div class="text rv" style="--dl:.12s">
     <p class="eyebrow">Boss fights</p>
     <h2>Every 10 levels, a <em>boss</em> arrives</h2>
@@ -257,7 +246,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
   </div>
 </div></section>
 <section class="show flip" id="journey" style="--g:#ff7a2f"><div class="wrap">
-  <div class="media rv"><i class="glow"></i><span class="phone p1"><img src="img/shot-bigmap-720.webp" srcset="img/shot-bigmap-420.webp 420w, img/shot-bigmap-720.webp 720w" sizes="(min-width:960px) 270px, 52vw" width="720" height="1280" alt="The galaxy map with the path of levels" loading="lazy" decoding="async"></span><span class="fl" style="left:66%;top:-6%;--k:16;--bob:7s"><img class="dimg" src="img/ringed_giant-336.webp" width="336" height="210" alt="" loading="lazy" style="--s:210px;--m:130px"></span><span class="fl" style="left:-16%;top:62%;--k:26;--bob:7s"><img class="dimg" src="img/star_gate-240.webp" width="230" height="240" alt="" loading="lazy" style="--s:150px;--m:96px"></span><i class="tw" style="left:75.6%;top:47.8%;--z:10px;--dl:2.11s;--c:#ffe9a8"></i><i class="tw" style="left:47.5%;top:51.8%;--z:8px;--dl:1.32s;--c:#bfe9ff"></i><i class="tw" style="left:61.2%;top:11.1%;--z:10px;--dl:1.15s;--c:#ffe9a8"></i><i class="tw" style="left:42.3%;top:30.1%;--z:8px;--dl:0.10s;--c:#ffc1ee"></i><i class="tw" style="left:89.0%;top:49.3%;--z:12px;--dl:0.04s;--c:#bfe9ff"></i><i class="tw" style="left:89.7%;top:17.8%;--z:8px;--dl:0.52s;--c:#fff"></i><i class="tw" style="left:12.4%;top:27.0%;--z:16px;--dl:1.32s;--c:#ffe9a8"></i><i class="tw" style="left:62.9%;top:90.6%;--z:8px;--dl:0.44s;--c:#ffc1ee"></i></div>
+  <div class="media rv"><i class="glow"></i><span class="phone p1"><img src="img/shot-bigmap-720.webp" srcset="img/shot-bigmap-420.webp 420w, img/shot-bigmap-720.webp 720w" sizes="(min-width:960px) 270px, 52vw" width="720" height="1280" alt="The galaxy map with the path of levels" loading="lazy" decoding="async"></span><span class="fl" style="left:66%;top:-6%;--k:16;--bob:7s"><img class="dimg" src="img/ringed_giant-336.webp" width="336" height="210" alt="" loading="lazy" style="--s:210px;--m:130px"></span><span class="fl" style="left:-16%;top:62%;--k:26;--bob:7s"><img class="dimg" src="img/star_gate-240.webp" width="230" height="240" alt="" loading="lazy" style="--s:150px;--m:96px"></span><i class="tw" style="left:6.4%;top:58.2%;--z:20px;--dl:2.99s;--c:#ffe9a8"></i><i class="tw" style="left:85.2%;top:91.5%;--z:16px;--dl:2.51s;--c:#bfe9ff"></i><i class="tw" style="left:23.6%;top:60.6%;--z:8px;--dl:0.52s;--c:#bfe9ff"></i><i class="tw" style="left:59.5%;top:21.5%;--z:20px;--dl:0.94s;--c:#fff"></i></div>
   <div class="text rv" style="--dl:.12s">
     <p class="eyebrow">The journey</p>
     <h2><em>1000 levels</em> across the galaxy</h2>
@@ -266,7 +255,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
   </div>
 </div></section>
 <section class="show" id="void" style="--g:#b06bff"><div class="wrap">
-  <div class="media rv two"><i class="glow"></i><span class="phone p1"><img src="img/shot-void_1-720.webp" srcset="img/shot-void_1-420.webp 420w, img/shot-void_1-720.webp 720w" sizes="(min-width:960px) 270px, 52vw" width="720" height="1280" alt="A memory level in The Void" loading="lazy" decoding="async"></span><span class="phone p2"><img src="img/shot-mind-720.webp" srcset="img/shot-mind-420.webp 420w, img/shot-mind-720.webp 720w" sizes="(min-width:960px) 270px, 52vw" width="720" height="1280" alt="The Cosmic IQ brain scan" loading="lazy" decoding="async"></span><span class="fl" style="left:-22%;top:-4%;--k:20;--bob:7s"><img class="dimg" src="img/black_hole-368.webp" width="368" height="147" alt="" loading="lazy" style="--s:230px;--m:140px"></span><i class="tw" style="left:11.3%;top:11.8%;--z:20px;--dl:2.02s;--c:#fff"></i><i class="tw" style="left:11.4%;top:78.9%;--z:10px;--dl:2.06s;--c:#bfe9ff"></i><i class="tw" style="left:36.3%;top:19.8%;--z:20px;--dl:2.86s;--c:#ffc1ee"></i><i class="tw" style="left:45.3%;top:95.9%;--z:20px;--dl:3.66s;--c:#fff"></i><i class="tw" style="left:34.8%;top:30.3%;--z:12px;--dl:2.49s;--c:#bfe9ff"></i><i class="tw" style="left:27.8%;top:35.2%;--z:16px;--dl:1.80s;--c:#ffc1ee"></i><i class="tw" style="left:90.9%;top:65.3%;--z:20px;--dl:2.04s;--c:#ffe9a8"></i><i class="tw" style="left:87.2%;top:76.3%;--z:10px;--dl:1.64s;--c:#bfe9ff"></i></div>
+  <div class="media rv two"><i class="glow"></i><span class="phone p1"><img src="img/shot-void_1-720.webp" srcset="img/shot-void_1-420.webp 420w, img/shot-void_1-720.webp 720w" sizes="(min-width:960px) 270px, 52vw" width="720" height="1280" alt="A memory level in The Void" loading="lazy" decoding="async"></span><span class="phone p2"><img src="img/shot-mind-720.webp" srcset="img/shot-mind-420.webp 420w, img/shot-mind-720.webp 720w" sizes="(min-width:960px) 270px, 52vw" width="720" height="1280" alt="The Cosmic IQ brain scan" loading="lazy" decoding="async"></span><span class="fl" style="left:-22%;top:-4%;--k:20;--bob:7s"><img class="dimg" src="img/black_hole-368.webp" width="368" height="147" alt="" loading="lazy" style="--s:230px;--m:140px"></span><i class="tw" style="left:67.0%;top:75.6%;--z:12px;--dl:1.16s;--c:#fff"></i><i class="tw" style="left:83.5%;top:28.3%;--z:12px;--dl:3.44s;--c:#fff"></i><i class="tw" style="left:52.1%;top:32.6%;--z:12px;--dl:2.78s;--c:#ffc1ee"></i><i class="tw" style="left:51.9%;top:58.8%;--z:10px;--dl:3.13s;--c:#ffc1ee"></i></div>
   <div class="text rv" style="--dl:.12s">
     <p class="eyebrow">Brain training</p>
     <h2>Dare to enter <em>The Void</em></h2>
@@ -275,7 +264,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
   </div>
 </div></section>
 <section class="show flip" id="daily" style="--g:#3fe07a"><div class="wrap">
-  <div class="media rv two"><i class="glow"></i><span class="phone p1"><img src="img/shot-today-720.webp" srcset="img/shot-today-420.webp 420w, img/shot-today-720.webp 720w" sizes="(min-width:960px) 270px, 52vw" width="720" height="1280" alt="The Cosmic Daily puzzle" loading="lazy" decoding="async"></span><span class="phone p2"><img src="img/shot-wheel0-720.webp" srcset="img/shot-wheel0-420.webp 420w, img/shot-wheel0-720.webp 720w" sizes="(min-width:960px) 270px, 52vw" width="720" height="1280" alt="The Cosmic Wheel" loading="lazy" decoding="async"></span><span class="fl" style="left:70%;top:70%;--k:18;--bob:7s"><img class="dimg" src="img/chest_open_2-240.webp" width="237" height="240" alt="" loading="lazy" style="--s:150px;--m:100px"></span><span class="fl" style="left:-10%;top:20%;--k:34;--bob:7s"><img class="dimg" src="img/coin-102.webp" width="102" height="101" alt="" loading="lazy" style="--s:64px;--m:46px"></span><span class="fl" style="left:88%;top:8%;--k:28;--bob:7s"><img class="dimg" src="img/star-90.webp" width="90" height="86" alt="" loading="lazy" style="--s:56px;--m:40px"></span><i class="tw" style="left:5.2%;top:51.6%;--z:20px;--dl:3.30s;--c:#fff"></i><i class="tw" style="left:58.2%;top:35.3%;--z:20px;--dl:1.42s;--c:#ffc1ee"></i><i class="tw" style="left:38.3%;top:91.4%;--z:16px;--dl:0.04s;--c:#ffe9a8"></i><i class="tw" style="left:52.3%;top:90.9%;--z:8px;--dl:0.71s;--c:#fff"></i><i class="tw" style="left:17.9%;top:86.1%;--z:8px;--dl:3.09s;--c:#ffc1ee"></i><i class="tw" style="left:45.3%;top:34.6%;--z:20px;--dl:1.90s;--c:#fff"></i><i class="tw" style="left:84.6%;top:67.7%;--z:16px;--dl:0.59s;--c:#ffe9a8"></i><i class="tw" style="left:41.3%;top:13.7%;--z:16px;--dl:2.00s;--c:#ffe9a8"></i></div>
+  <div class="media rv two"><i class="glow"></i><span class="phone p1"><img src="img/shot-today-720.webp" srcset="img/shot-today-420.webp 420w, img/shot-today-720.webp 720w" sizes="(min-width:960px) 270px, 52vw" width="720" height="1280" alt="The Cosmic Daily puzzle" loading="lazy" decoding="async"></span><span class="phone p2"><img src="img/shot-wheel0-720.webp" srcset="img/shot-wheel0-420.webp 420w, img/shot-wheel0-720.webp 720w" sizes="(min-width:960px) 270px, 52vw" width="720" height="1280" alt="The Cosmic Wheel" loading="lazy" decoding="async"></span><span class="fl" style="left:70%;top:70%;--k:18;--bob:7s"><img class="dimg" src="img/chest_open_2-240.webp" width="237" height="240" alt="" loading="lazy" style="--s:150px;--m:100px"></span><span class="fl" style="left:-10%;top:20%;--k:34;--bob:7s"><img class="dimg" src="img/coin-102.webp" width="102" height="101" alt="" loading="lazy" style="--s:64px;--m:46px"></span><span class="fl" style="left:88%;top:8%;--k:28;--bob:7s"><img class="dimg" src="img/star-90.webp" width="90" height="86" alt="" loading="lazy" style="--s:56px;--m:40px"></span><i class="tw" style="left:86.1%;top:49.1%;--z:10px;--dl:0.04s;--c:#ffe9a8"></i><i class="tw" style="left:93.5%;top:22.4%;--z:8px;--dl:1.10s;--c:#ffc1ee"></i><i class="tw" style="left:75.6%;top:47.8%;--z:10px;--dl:2.11s;--c:#ffe9a8"></i><i class="tw" style="left:47.5%;top:51.8%;--z:8px;--dl:1.32s;--c:#bfe9ff"></i></div>
   <div class="text rv" style="--dl:.12s">
     <p class="eyebrow">Every day</p>
     <h2>Something <em>new</em> every day</h2>
@@ -357,7 +346,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
 <section class="sec tight"><div class="wrap notes"><div class="nt rv"><h3>Easy to see</h3><p>Accessibility mode adds a shape symbol to every planet, so colour is never the only clue.</p></div><div class="nt rv"><h3>Speaks your language</h3><p>Play in English, Hebrew, Arabic, Spanish or Russian.</p></div></div></section>
 
 <section class="band" id="get"><img class="spin" src="img/spiral_galaxy-900.webp" width="887" height="703" alt="" loading="lazy">
-  <div class="wrap rv"><i class="tw" style="left:56.9%;top:69.7%;--z:10px;--dl:3.77s;--c:#ffc1ee"></i><i class="tw" style="left:67.4%;top:82.3%;--z:20px;--dl:2.61s;--c:#ffc1ee"></i><i class="tw" style="left:88.9%;top:79.9%;--z:8px;--dl:1.19s;--c:#ffc1ee"></i><i class="tw" style="left:75.8%;top:81.2%;--z:20px;--dl:3.34s;--c:#bfe9ff"></i><i class="tw" style="left:21.6%;top:73.8%;--z:8px;--dl:0.70s;--c:#fff"></i><i class="tw" style="left:87.2%;top:53.2%;--z:16px;--dl:1.84s;--c:#ffc1ee"></i><i class="tw" style="left:43.5%;top:35.4%;--z:8px;--dl:1.69s;--c:#ffe9a8"></i><i class="tw" style="left:8.8%;top:5.5%;--z:20px;--dl:2.69s;--c:#ffe9a8"></i><i class="tw" style="left:10.2%;top:83.7%;--z:10px;--dl:1.85s;--c:#ffe9a8"></i><i class="tw" style="left:95.1%;top:25.5%;--z:20px;--dl:2.80s;--c:#ffc1ee"></i><i class="tw" style="left:90.5%;top:60.0%;--z:20px;--dl:0.38s;--c:#bfe9ff"></i><i class="tw" style="left:6.4%;top:9.8%;--z:8px;--dl:1.31s;--c:#ffc1ee"></i>
+  <div class="wrap rv"><i class="tw" style="left:61.2%;top:11.1%;--z:10px;--dl:1.15s;--c:#ffe9a8"></i><i class="tw" style="left:42.3%;top:30.1%;--z:8px;--dl:0.10s;--c:#ffc1ee"></i><i class="tw" style="left:89.0%;top:49.3%;--z:12px;--dl:0.04s;--c:#bfe9ff"></i><i class="tw" style="left:89.7%;top:17.8%;--z:8px;--dl:0.52s;--c:#fff"></i><i class="tw" style="left:12.4%;top:27.0%;--z:16px;--dl:1.32s;--c:#ffe9a8"></i><i class="tw" style="left:62.9%;top:90.6%;--z:8px;--dl:0.44s;--c:#ffc1ee"></i><i class="tw" style="left:11.3%;top:11.8%;--z:20px;--dl:2.02s;--c:#fff"></i><i class="tw" style="left:11.4%;top:78.9%;--z:10px;--dl:2.06s;--c:#bfe9ff"></i>
     <h2>Take on your <em>first boss</em></h2><p class="lead">Free to play on Android phones and tablets.</p><span class="cta soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3v18l15-9z"/></svg><span>Coming soon to Google Play</span></span><p class="note">Now in closed testing on Android.</p>
   </div>
 </section>
@@ -375,61 +364,71 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
 <script>
 (function(){
   var calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var root = document.documentElement;
 
-  /* twinkling sky with the odd shooting star */
-  var cv = document.getElementById("sky"), g = cv.getContext("2d");
-  var W, H, stars = [], shot = null, nextShot = 2600, last = 0;
+  /* sky: every star is painted once; a few big ones twinkle, each inside its own small patch */
+  var back = document.getElementById("sky"), front = document.getElementById("sky2");
+  var bg = back.getContext("2d"), fg = front.getContext("2d");
+  var W = 0, H = 0, big = [], shot = null, box = null, nextShot = 3000, last = 0;
   var tints = ["255,255,255", "255,232,170", "190,222,255", "255,196,240"];
-  function size(){
-    var d = Math.min(window.devicePixelRatio || 1, 2);
-    W = innerWidth; H = innerHeight; cv.width = W * d; cv.height = H * d; g.setTransform(d, 0, 0, d, 0, 0);
-    stars = [];
-    for (var i = 0, n = Math.round(Math.min(280, W * H / 4600)); i < n; i++){
-      var big = Math.random() < .09;
-      stars.push({x: Math.random() * W, y: Math.random() * H, r: big ? 1.4 + Math.random() * 1.2 : .4 + Math.random() * .9,
-        p: Math.random() * 6.28, s: .7 + Math.random() * 2.4, c: tints[Math.random() * tints.length | 0], big: big});
+  function star(g, s, a){
+    g.fillStyle = "rgba(" + s.c + "," + a + ")";
+    g.beginPath(); g.arc(s.x, s.y, s.r, 0, 6.28); g.fill();
+    if (s.big){
+      var l = s.r * (2.5 + 4 * a);
+      g.strokeStyle = "rgba(" + s.c + "," + a * .6 + ")"; g.lineWidth = .8;
+      g.beginPath(); g.moveTo(s.x - l, s.y); g.lineTo(s.x + l, s.y); g.moveTo(s.x, s.y - l); g.lineTo(s.x, s.y + l); g.stroke();
     }
-    if (calm) draw(0);
   }
-  function draw(t){
-    g.clearRect(0, 0, W, H);
-    for (var i = 0; i < stars.length; i++){
-      var s = stars[i], a = calm ? .75 : .3 + .7 * (.5 + .5 * Math.sin(t * .001 * s.s + s.p));
-      g.fillStyle = "rgba(" + s.c + "," + a + ")";
-      g.beginPath(); g.arc(s.x, s.y, s.r, 0, 6.28); g.fill();
-      if (s.big){
-        var l = s.r * (2.5 + 4 * a);
-        g.strokeStyle = "rgba(" + s.c + "," + a * .6 + ")"; g.lineWidth = .8;
-        g.beginPath(); g.moveTo(s.x - l, s.y); g.lineTo(s.x + l, s.y); g.moveTo(s.x, s.y - l); g.lineTo(s.x, s.y + l); g.stroke();
-      }
-    }
-    if (shot){
-      shot.x += shot.vx; shot.y += shot.vy; shot.life -= .018;
-      var tail = g.createLinearGradient(shot.x, shot.y, shot.x - shot.vx * 16, shot.y - shot.vy * 16);
-      tail.addColorStop(0, "rgba(255,255,255," + Math.max(shot.life, 0) + ")"); tail.addColorStop(1, "rgba(255,255,255,0)");
-      g.strokeStyle = tail; g.lineWidth = 2; g.lineCap = "round";
-      g.beginPath(); g.moveTo(shot.x, shot.y); g.lineTo(shot.x - shot.vx * 16, shot.y - shot.vy * 16); g.stroke();
-      if (shot.life <= 0) shot = null;
+  function size(){
+    if (innerWidth === W && innerHeight <= H) return;   /* a phone hiding its address bar is not a new sky */
+    var d = Math.min(window.devicePixelRatio || 1, 1.5);
+    W = innerWidth; H = innerHeight + 120;
+    [back, front].forEach(function(c){ c.width = W * d; c.height = H * d; c.style.height = H + "px"; c.getContext("2d").setTransform(d, 0, 0, d, 0, 0); });
+    big = []; shot = null; box = null;
+    for (var i = 0, n = Math.round(Math.min(260, W * H / 5200)); i < n; i++){
+      var s = {x: Math.random() * W, y: Math.random() * H, c: tints[Math.random() * tints.length | 0], p: Math.random() * 6.28, v: .7 + Math.random() * 2.2};
+      s.big = Math.random() < .13; s.r = s.big ? 1.3 + Math.random() * 1.2 : .4 + Math.random() * .9;
+      if (s.big && !calm && big.length < 34) big.push(s); else star(bg, s, s.big ? .8 : .3 + Math.random() * .6);
     }
   }
   function tick(t){
     requestAnimationFrame(tick);
-    if (t - last < 33) return;
-    if (t > nextShot && !shot){
-      var dir = Math.random() < .5 ? 1 : -1;
-      shot = {x: W * (.2 + Math.random() * .6), y: H * Math.random() * .4, vx: dir * (7 + Math.random() * 5), vy: 3 + Math.random() * 3, life: 1};
-      nextShot = t + 3500 + Math.random() * 5000;
+    if (t - last < 48) return;
+    last = t;
+    for (var i = 0; i < big.length; i++){
+      var s = big[i], l = s.r * 6.5 + 2;
+      fg.clearRect(s.x - l, s.y - l, l * 2, l * 2);
+      star(fg, s, .25 + .75 * (.5 + .5 * Math.sin(t * .001 * s.v + s.p)));
     }
-    last = t; draw(t);
+    if (box){ fg.clearRect(box[0], box[1], box[2], box[3]); box = null; }
+    if (!shot && t > nextShot){
+      var dir = Math.random() < .5 ? 1 : -1;
+      shot = {x: W * (.2 + Math.random() * .6), y: H * Math.random() * .35, vx: dir * (11 + Math.random() * 7), vy: 5 + Math.random() * 4, life: 1};
+      nextShot = t + 4000 + Math.random() * 6000;
+    }
+    if (shot){
+      shot.x += shot.vx; shot.y += shot.vy; shot.life -= .03;
+      var tx = shot.x - shot.vx * 11, ty = shot.y - shot.vy * 11;
+      var tail = fg.createLinearGradient(shot.x, shot.y, tx, ty);
+      tail.addColorStop(0, "rgba(255,255,255," + Math.max(shot.life, 0) + ")"); tail.addColorStop(1, "rgba(255,255,255,0)");
+      fg.strokeStyle = tail; fg.lineWidth = 2; fg.lineCap = "round";
+      fg.beginPath(); fg.moveTo(shot.x, shot.y); fg.lineTo(tx, ty); fg.stroke();
+      box = [Math.min(shot.x, tx) - 4, Math.min(shot.y, ty) - 4, Math.abs(shot.x - tx) + 8, Math.abs(shot.y - ty) + 8];
+      if (shot.life <= 0) shot = null;
+    }
   }
   size(); addEventListener("resize", size);
   if (!calm) requestAnimationFrame(tick);
 
-  /* lazy sprite strips, scroll reveal, counters */
+  /* lazy sprite strips, scroll reveal, counters, and a "live" mark on the sections in view */
   var io = "IntersectionObserver" in window;
   var sprites = document.querySelectorAll(".spr[data-bg]");
   function load(el){ el.style.backgroundImage = "url(" + el.dataset.bg + ")"; el.removeAttribute("data-bg"); }
   if (io){
+    root.classList.add("io");
+    var lv = new IntersectionObserver(function(es){ es.forEach(function(e){ e.target.classList.toggle("live", e.isIntersecting); }); }, {rootMargin: "80px"});
+    document.querySelectorAll("main>section").forEach(function(el){ lv.observe(el); });
     var lz = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ load(e.target); lz.unobserve(e.target); } }); }, {rootMargin: "400px"});
     sprites.forEach(function(el){ lz.observe(el); });
     var rv = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add("in"); rv.unobserve(e.target); } }); }, {threshold: .14});
@@ -445,20 +444,22 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
   });
 
   if (calm) return;
-  /* the floating things lean away from the pointer */
-  var raf = 0;
+  /* the floating things lean away from the pointer: only in the sections on screen */
+  var raf = 0, mx = 0, my = 0;
   addEventListener("pointermove", function(e){
-    if (e.pointerType === "touch" || raf) return;
+    if (e.pointerType === "touch") return;
+    mx = (e.clientX / innerWidth - .5).toFixed(3); my = (e.clientY / innerHeight - .5).toFixed(3);
+    if (raf) return;
     raf = requestAnimationFrame(function(){
       raf = 0;
-      document.documentElement.style.setProperty("--px", (e.clientX / innerWidth - .5).toFixed(3));
-      document.documentElement.style.setProperty("--py", (e.clientY / innerHeight - .5).toFixed(3));
+      var els = document.querySelectorAll("section.live .stage,section.live .media");
+      for (var i = 0; i < els.length; i++){ els[i].style.setProperty("--px", mx); els[i].style.setProperty("--py", my); }
     });
   }, {passive: true});
   /* a burst of sparks wherever you click or tap */
   var hues = ["#fff", "#ffe07a", "#ff9be0", "#9fe8ff"];
   addEventListener("pointerdown", function(e){
-    for (var i = 0; i < 9; i++){
+    for (var i = 0; i < 8; i++){
       var s = document.createElement("i"), a = Math.random() * 6.28, r = 34 + Math.random() * 54;
       s.className = "spk";
       s.style.cssText = "left:" + (e.clientX - 6) + "px;top:" + (e.clientY - 6) + "px;--dx:" + Math.cos(a) * r + "px;--dy:" + Math.sin(a) * r + "px;--c:" + hues[i % 4];
