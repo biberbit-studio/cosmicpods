@@ -212,6 +212,10 @@ footer a{color:var(--text)}
 .studio img{width:36px;height:36px}
 footer nav{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center}
 footer nav a{min-height:44px;display:inline-flex;align-items:center}
+.legal{flex-basis:100%;margin:0;font-size:.82rem;opacity:.8}
+/* the official Google Play badge: shown exactly as supplied, with its clear space */
+.badge{display:inline-block;margin:16px;line-height:0}
+.badge img{height:64px;width:auto;max-width:none}
 
 /* sections outside the screen stop animating */
 .io main>section:not(.live) *,.io main>section:not(.live) *::before,.io main>section:not(.live) *::after{animation-play-state:paused!important}
@@ -388,6 +392,7 @@ footer nav a{min-height:44px;display:inline-flex;align-items:center}
     <a href="mailto:support@biberbit.com">support@biberbit.com</a>
     <span>&copy; 2026 BiberBit Studio</span>
   </nav>
+  <p class="legal">Google Play and Android are trademarks of Google LLC.</p>
 </div></footer>
 
 <script>
