@@ -26,6 +26,10 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:72px}
 body{margin:0;font-family:var(--body);font-size:17px;color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* nothing may widen the page: floating art is cut at the screen edge (phones would zoom out otherwise) */
+html{overflow-x:hidden}
+main{overflow:hidden}
+@supports (overflow:clip){html,body{overflow-x:clip}main{overflow:clip}}
 img{max-width:100%;height:auto;display:block}
 i{font-style:normal}
 a{color:var(--gold)}
